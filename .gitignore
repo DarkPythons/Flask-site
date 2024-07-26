@@ -1,1 +1,11 @@
 .venv
+poetry.lock
+/venv
+.env
+app/.env
+__pycache__
+*.log
+*.zip
+.pytest_cache
+/venv1
+venv1
