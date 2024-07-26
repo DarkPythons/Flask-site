@@ -1,8 +1,29 @@
+import datetime
+from sqlalchemy.orm import Mapped, mapped_column
+from main import app
+from flask_sqlalchemy import SQLAlchemy
+import datetime
 from config import BaseSettingsDataBase
 
 db_setting = BaseSettingsDataBase()
 
-DATABASE_URL = f"postgresql+psycopg2://\
-{db_setting.DB_USER}:{db_setting.DB_PASS}@\
-{db_setting.DB_HOST}:{db_setting.DB_PORT}/\
-{db_setting.DB_NAME}"
+app.config['SQLALCHEMY_DATABASE_URI'] = db_setting.get_db_url()
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+#Подключение SQLalchemy с нашим приложением
+db = SQLAlchemy(app)
+
+
+class Users(db.Model):
+    id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(db.String(50), unique=True)
+    psw: Mapped[str] = mapped_column(db.String(500), nullable=False)
+    date: Mapped[str] = mapped_column(db.DateTime, default=datetime.datetime.utcnow)
+
+def create_table():
+    with app.app_context():
+        db.create_all()
+def drop_table():
+    with app.app_context():
+        db.drop_all()
+

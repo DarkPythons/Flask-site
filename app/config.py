@@ -21,5 +21,11 @@ class BaseSettingsDataBase(BaseConfigClassInFile):
     DB_PORT:str = Field(min_length=1, max_length=10, default='5432')
     DB_NAME:str = Field(min_length=1, max_length=100, default='praktika_flask')
 
+    def get_db_url(self):
+        return f"postgresql+psycopg2://\
+{self.DB_USER}:{self.DB_PASS}@\
+{self.DB_HOST}:{self.DB_PORT}/\
+{self.DB_NAME}"
+
 class BaseSettingsApp(BaseConfigClassInFile):
     PROJECT_ON_DEBUG:bool = Field(default=True)
