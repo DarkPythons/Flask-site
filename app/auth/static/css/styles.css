@@ -1,0 +1,11 @@
+.auth_content_center {
+    justify-content: center;
+    position: relative;
+
+    top: 50%;
+    padding-top: 10%;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
