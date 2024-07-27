@@ -1,0 +1,35 @@
+{% extends "auth/base_auth.html" %}
+
+{% block content %}
+{{ super() }}
+<div class='auth_content_center'>
+<div class=' '>
+
+<form class='text-center' action='' method='post'>
+    <img class="mb-4" src="" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Введите ваши данные</h1>
+
+    <div class='form-floating'>
+        <input type='tecy' class='form-control'  id='floatingInput' placeholder='user' required name='username'>
+        <label for='floatingInput'>Username</label>
+    </div>
+    <div class="form-floating">
+      <input type="email" class="form-control"  id="floatingInput" placeholder="name@example.com" required name='email'>
+      <label for="floatingInput">Email</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required name='psw'>
+      <label for="floatingPassword">Пароль</label>
+    </div>
+    <div class='form-floating'>
+        <input type='password'  class='form-control' id='floatingPassword' placeholder='Password2' required name='psw2'>
+        <label for='floatingPassword'>Повтор пароля</label>
+    </div>
+
+    <p></p>
+    <button class="btn btn-success w-100 py-2" type="submit">Зарегистрироваться</button>
+
+  </form>
+</div>
+</div>
+{% endblock content %}

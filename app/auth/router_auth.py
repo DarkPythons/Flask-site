@@ -4,5 +4,9 @@ router_auth = Blueprint('router_auth', __name__, static_folder='static', templat
 
 
 @router_auth.route('/login')
-def register():
+def login():
     return render_template('auth/login.html', title='Вход')
+
+@router_auth.route('/register')
+def register():
+    return render_template('auth/register.html', title='Регистрация')

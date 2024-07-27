@@ -16,7 +16,8 @@ db = SQLAlchemy(app)
 
 class Users(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(db.String(50), unique=True)
+    username: Mapped[str] = mapped_column(db.String(100), nullable=False)
+    email: Mapped[str] = mapped_column(db.String(50), unique=True, nullable=False)
     psw: Mapped[str] = mapped_column(db.String(500), nullable=False)
     date: Mapped[str] = mapped_column(db.DateTime, default=datetime.datetime.utcnow)
 
