@@ -29,3 +29,4 @@ class BaseSettingsDataBase(BaseConfigClassInFile):
 
 class BaseSettingsApp(BaseConfigClassInFile):
     PROJECT_ON_DEBUG:bool = Field(default=True)
+    SECRET_KEY:str = Field(min_length=5, max_length=50)

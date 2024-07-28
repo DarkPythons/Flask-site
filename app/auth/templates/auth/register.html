@@ -3,11 +3,16 @@
 {% block content %}
 {{ super() }}
 <div class='auth_content_center'>
-<div class=' '>
+
+{% for cat, msg in get_flashed_messages(True) %}
+<div class='flash {{ cat }}'>{{ msg }}</div>
+{% endfor %}
 
 <form class='text-center' action='' method='post'>
     <img class="mb-4" src="" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Введите ваши данные</h1>
+
+
 
     <div class='form-floating'>
         <input type='tecy' class='form-control'  id='floatingInput' placeholder='user' required name='username'>
@@ -30,6 +35,5 @@
     <button class="btn btn-success w-100 py-2" type="submit">Зарегистрироваться</button>
 
   </form>
-</div>
 </div>
 {% endblock content %}

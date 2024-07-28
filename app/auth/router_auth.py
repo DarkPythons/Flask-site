@@ -1,13 +1,12 @@
 from flask import Blueprint, render_template, request, flash
+from .auth_orm import OrmRequest
 
 
-#orm = GetConnectOrm()
+router_auth = Blueprint('router_auth', __name__, static_folder='static', template_folder='templates')
 
 
-router = Blueprint('router_auth', __name__, static_folder='static', template_folder='templates')
 
-
-@router.route('/login')
+@router_auth.route('/login')
 def login():
     return render_template('auth/login.html', title='Вход')
 
@@ -20,8 +19,9 @@ def data_validate(form_data):
     else:
         return 400
 
-@router.route('/register', methods=['POST', 'GET'])
+@router_auth.route('/register', methods=['POST', 'GET'])
 def register():
+    orm = OrmRequest()
     if request.method == 'POST':
         if data_validate(request.form) == 200:
             try:
@@ -32,9 +32,8 @@ def register():
                 flash('Ошибка на стороне базы данных')
                 print('Ошибка на стороне базы данных: ' + str(error))
         elif data_validate(request.form) == 400:
-            flash("Неккоректные email или username.s")
+            flash("Неккоректные email или username", category='error')
         else:
-            flash('Пароли не совпадают.')
+            flash('Пароли не совпадают.', category='error')
 
-        
     return render_template('auth/register.html', title='Регистрация')
