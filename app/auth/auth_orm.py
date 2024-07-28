@@ -1,4 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import select
 
 def loading_import_no_circule():
     from database import Users, db
@@ -18,6 +19,11 @@ class OrmRequest:
         self.session.add(user)
         self.session.flush()
         self.session.commit()
+
+    def get_user_by_email(self, email_user):
+        query = select(self.Users_model).where(self.Users_model.email == email_user)
+        result = self.session.execute(query)
+        return result.first()
 
     def get_rollback(self):
         self.session.rollback()

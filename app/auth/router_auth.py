@@ -1,13 +1,23 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .auth_orm import OrmRequest
+from flask_login import current_user
 
 
 router_auth = Blueprint('router_auth', __name__, static_folder='static', template_folder='templates')
 
 
 
-@router_auth.route('/login')
+@router_auth.route('/login', methods=['POST', 'GET'])
 def login():
+    orm = OrmRequest()
+    #Если пользователь уже авторизован
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
+    #Доделать.
+    if request.method == 'POST':
+        user = orm.get_user_by_email(request.form['email'])
+        print(user)
+
     return render_template('auth/login.html', title='Вход')
 
 def data_validate(form_data):
@@ -37,3 +47,7 @@ def register():
             flash('Пароли не совпадают.', category='error')
 
     return render_template('auth/register.html', title='Регистрация')
+
+@router_auth.route('/profile', methods=['GET'])
+def profile():
+    return "Ваш профиль"

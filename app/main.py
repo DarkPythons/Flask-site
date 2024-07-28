@@ -1,12 +1,13 @@
 from flask import Flask
-from flask_login import LoginManager
+
+from flask_login import LoginManager, login_required
 
 from config import BaseSettingsApp, BaseSettingsDataBase
 from router_main import main_router
 from auth.router_auth import router_auth
 
+
 db_setting = BaseSettingsDataBase()
-from auth.auth_orm import OrmRequest
 
 app_settings = BaseSettingsApp()
 
@@ -18,11 +19,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_setting.get_db_url()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-#Подключение SQLalchemy с нашим приложением
+login_manager = LoginManager(app)
+login_manager.view = 'login'
+login_manager.login_message = "Авторизуйтесь для доступа к закрытым страницам"
+login_manager.login_message_category = 'success'
 
 
-
-
+@login_manager.user_loader
+def load_user(user_id):
+    from database import get_user_by_id 
+    print('Load user')
+    return get_user_by_id(user_id)
 
 
 

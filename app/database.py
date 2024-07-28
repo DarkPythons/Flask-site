@@ -3,11 +3,11 @@ from sqlalchemy.orm import Mapped, mapped_column
 from main import app
 from flask_sqlalchemy import SQLAlchemy
 from config import BaseSettingsDataBase
+from sqlalchemy import select
 
 
 
 
-import datetime
 
 db = SQLAlchemy(app)
 
@@ -22,14 +22,10 @@ class Users(db.Model):
     def __repr__(self):
         return f"<users {self.id}>"
 
-
-
-# def create_table():
-#     with app.app_context():
-#         db.create_all()
-# def drop_table():
-#     with app.app_context():
-#         db.drop_all()
+def get_user_by_id(user_id):
+    query = select(Users).where(Users.id == user_id)
+    result = db.session.execute(query)
+    return result.one()
 
 
 
