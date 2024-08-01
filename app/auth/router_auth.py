@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .auth_orm import OrmRequest
 from flask_login import current_user, login_user
+
+from .auth_orm import OrmRequest
 from .UserLogin import UserLogin
 from .utils import data_validate
 

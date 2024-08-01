@@ -1,17 +1,12 @@
 import datetime
 from sqlalchemy.orm import Mapped, mapped_column
-from main import app
-from flask_sqlalchemy import SQLAlchemy
-from config import BaseSettingsDataBase
 from sqlalchemy import select
+from flask_sqlalchemy import SQLAlchemy
 
-
-
+from main import app
 
 
 db = SQLAlchemy(app)
-
-
 
 
 class Users(db.Model):
