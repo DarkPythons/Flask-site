@@ -12,6 +12,8 @@ from sqlalchemy import select
 db = SQLAlchemy(app)
 
 
+
+
 class Users(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
     username: Mapped[str] = mapped_column(db.String(100), nullable=False)

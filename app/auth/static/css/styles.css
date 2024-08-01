@@ -8,7 +8,11 @@
     vertical-align: middle;
     align-items: center;
 }
-.flash {padding:10px;}
+.flash {
+    padding:10px;
+    margin: 0px;
+    margin-bottom: 10px;
+}
 .flash.success {
     border: 1px solid #13742e;
     background: rgb(64, 179, 33);

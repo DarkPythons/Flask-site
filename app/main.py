@@ -1,10 +1,10 @@
 from flask import Flask
-
 from flask_login import LoginManager, login_required
 
 from config import BaseSettingsApp, BaseSettingsDataBase
 from router_main import main_router
 from auth.router_auth import router_auth
+from auth.UserLogin import UserLogin
 
 
 db_setting = BaseSettingsDataBase()
@@ -27,11 +27,8 @@ login_manager.login_message_category = 'success'
 
 @login_manager.user_loader
 def load_user(user_id):
-    from database import get_user_by_id 
-    print('Load user')
-    return get_user_by_id(user_id)
-
-
+    print('loadUser')
+    return UserLogin().fromDB(user_id)
 
 app.register_blueprint(main_router, url_prefix="/")
 app.register_blueprint(router_auth, url_prefix='/auth')
