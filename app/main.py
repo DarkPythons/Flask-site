@@ -27,7 +27,7 @@ login_manager.login_message_category = 'success'
 
 @login_manager.user_loader
 def load_user(user_id):
-    print('loadUser')
+    from auth.UserLogin import UserLogin
     return UserLogin().fromDB(user_id)
 
 app.register_blueprint(main_router, url_prefix="/")

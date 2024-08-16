@@ -9,6 +9,11 @@
     <img class="mb-4" src="" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Введите данные для входа</h1>
 
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class='flash {{ cat }}'>{{ msg }}</div>
+    {% endfor %}
+
+
     <div class="form-floating">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required name='email'>
       <label for="floatingInput">Email</label>

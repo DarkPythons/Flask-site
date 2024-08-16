@@ -4,7 +4,7 @@ from sqlalchemy import select
 from flask_sqlalchemy import SQLAlchemy
 
 from main import app
-
+import logging
 
 db = SQLAlchemy(app)
 
@@ -19,10 +19,19 @@ class Users(db.Model):
     def __repr__(self):
         return f"<users {self.id}>"
 
+class UserOrm:
+    def __init__(self, db):
+        self.db = db
+    def get_user_by_id(self, user_id):
+        result = db.session.query(Users).get(user_id)
+        return result
+        
 def get_user_by_id(user_id):
     query = select(Users).where(Users.id == user_id)
     result = db.session.execute(query)
-    return result.one()
+    if not result:
+        return False
+    return result.mappings().all()
 
 
 
