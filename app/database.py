@@ -4,7 +4,6 @@ from sqlalchemy import select
 from flask_sqlalchemy import SQLAlchemy
 
 from main import app
-import logging
 
 db = SQLAlchemy(app)
 

@@ -6,7 +6,6 @@ from router_main import main_router
 from auth.router_auth import router_auth
 from auth.UserLogin import UserLogin
 
-
 db_setting = BaseSettingsDataBase()
 
 app_settings = BaseSettingsApp()
@@ -23,7 +22,6 @@ login_manager = LoginManager(app)
 login_manager.view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступа к закрытым страницам"
 login_manager.login_message_category = 'success'
-
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import current_user, login_user, login_required
+from flask_login import current_user, login_user, login_required, logout_user
 
 from .auth_orm import OrmRequest
 from .UserLogin import UserLogin
@@ -76,9 +76,16 @@ def register():
             flash('Пароли не совпадают.', category='error')
     return render_template('auth/register.html', title='Регистрация')
 
-
-@router_auth.route('/profile', methods=['GET'])
 @login_required
+@router_auth.route('/logout', methods=['GET'])
+def logout():
+    logout_user()
+    flash("Вы вышли из аккаунта", category='success')
+    return redirect(url_for('.login'))
+
+
+@login_required
+@router_auth.route('/profile', methods=['GET'])
 def profile(): 
     orm = OrmRequest()
     user_email = current_user.get_email()

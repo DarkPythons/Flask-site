@@ -1,14 +1,11 @@
-from flask import url_for
+
 
 
 
 class UserLogin():
-    
-    
+       
     def fromDB(self, user_id):
-        from database import db, UserOrm, get_user_by_id
-        #userOrm = UserOrm(db)
-        #self.__user = userOrm.get_user_by_id(user_id)
+        from database import get_user_by_id
         self.__user = get_user_by_id(user_id)
         return self
     

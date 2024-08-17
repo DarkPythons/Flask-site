@@ -21,3 +21,13 @@
     border: 1px solid rgb(149, 13, 13);
     background: rgb(195, 74, 74);
 }
+
+.two-element {
+    display: flex;
+}
+
+.btn-exit {
+    background-color: red;
+    margin-top: 10px;
+    padding: 10px;
+}
