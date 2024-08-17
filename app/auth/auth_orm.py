@@ -25,8 +25,12 @@ class OrmRequest:
             self.Users.date, 
             self.Users.username).where(self.Users.email == email_user).limit(1)
         result = self.session.execute(query)
-        return result.mappings().all()
-    
+        if result:
+            list_result:list = result.mappings().all()
+            if list_result:
+                return list_result[0]
+        return False
+        
     def validate_password_user(self, password_user, password_form):
         password_user_from_db = password_user
         result = check_password_hash(password_user_from_db, password_form)
