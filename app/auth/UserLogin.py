@@ -26,8 +26,8 @@ class UserLogin():
         return str(self.__user['id'])
 
     #__user - хранит полученные данные из базы
-    def getName(self):
+    def get_name(self):
         return self.__user['username'] if self.__user else "Без имени"
     
-    def getEmail(self):
+    def get_email(self):
         return self.__user['email'] if self.__user else "Без email"

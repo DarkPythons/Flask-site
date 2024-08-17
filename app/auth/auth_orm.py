@@ -36,6 +36,5 @@ class OrmRequest:
         result = check_password_hash(password_user_from_db, password_form)
         return result
 
-
     def get_rollback(self):
         self.session.rollback()

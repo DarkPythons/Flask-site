@@ -3,7 +3,9 @@ from flask_login import current_user, login_user, login_required
 
 from .auth_orm import OrmRequest
 from .UserLogin import UserLogin
-from .utils import data_validate
+from .utils import data_validate, creating_dict_for_profile
+
+
 
 router_auth = Blueprint('router_auth', __name__, static_folder='static', template_folder='templates')
 
@@ -77,6 +79,9 @@ def register():
 
 @router_auth.route('/profile', methods=['GET'])
 @login_required
-def profile():
-    return render_template('auth/profile.html', title='Профиль')
-    return "Ваш профиль"
+def profile(): 
+    orm = OrmRequest()
+    user_email = current_user.get_email()
+    user_info = orm.get_user_by_email(user_email)
+    date: dict = creating_dict_for_profile(user_info)
+    return render_template('auth/profile.html', title='Профиль', date=date)

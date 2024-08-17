@@ -27,11 +27,13 @@ class UserOrm:
         return result
         
 def get_user_by_id(user_id):
-    query = select(Users).where(Users.id == user_id)
+    query = select(Users.id, Users.username, Users.email, Users.psw, Users.date).where(Users.id == user_id)
     result = db.session.execute(query)
-    if not result:
-        return False
-    return result.mappings().all()
+    if result:
+        list_result: list = result.mappings().all()
+        if list_result:
+            return list_result[0]
+    return False
 
 
 

@@ -11,3 +11,13 @@ def data_validate(form_data):
     #Если данные в целом не валидны
     else:
         return 400
+    
+
+def creating_dict_for_profile(user_orm):
+    date = {
+        "username" : user_orm['username'],
+        "email" : user_orm['email'],
+        "date" : user_orm['date']
+    }
+
+    return date
