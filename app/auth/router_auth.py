@@ -7,11 +7,12 @@ from .utils import data_validate, creating_dict_for_profile
 
 
 
-router_auth = Blueprint('router_auth', 
+auth_router = Blueprint('router_auth', 
     __name__, 
     static_folder='static', 
     template_folder='templates'
     )
+
 
 
 def create_user_session(*, user):
@@ -58,7 +59,7 @@ def function_by_register():
         orm.get_rollback()
         flash('Ошибка на стороне базы данных', category='error')
 
-@router_auth.route('/login', methods=['POST', 'GET'])
+@auth_router.route('/login', methods=['POST', 'GET'])
 def login():
     """
     Обработчик запроса на получение страницы аутентификации и обработчик
@@ -76,7 +77,7 @@ def login():
 
 
 
-@router_auth.route('/register', methods=['POST', 'GET'])
+@auth_router.route('/register', methods=['POST', 'GET'])
 def register():
     """
     Обработчик запроса на получение страницы регистрации и обработка данных с формы, 
@@ -97,7 +98,7 @@ def register():
     return render_template('auth/register.html', title='Регистрация')
 
 
-@router_auth.route('/logout', methods=['GET'])
+@auth_router.route('/logout', methods=['GET'])
 @login_required
 def logout():
     """
@@ -111,7 +112,7 @@ def logout():
 
 
 
-@router_auth.route('/profile', methods=['GET'])
+@auth_router.route('/profile', methods=['GET'])
 @login_required
 def profile():
     """
