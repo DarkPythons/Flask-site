@@ -96,8 +96,9 @@ def register():
             flash('Пароли не совпадают.', category='error')
     return render_template('auth/register.html', title='Регистрация')
 
-@login_required
+
 @router_auth.route('/logout', methods=['GET'])
+@login_required
 def logout():
     """
     Обработчик запроса на выход из аккаунта, доступен тем пользователям, 
@@ -109,8 +110,9 @@ def logout():
     return redirect(url_for('.login'))
 
 
-@login_required
+
 @router_auth.route('/profile', methods=['GET'])
+@login_required
 def profile():
     """
     Получение своего профиля, доступен только пользователям с сессией.
