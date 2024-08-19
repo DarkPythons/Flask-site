@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class='get_indentation'>
+    <h1>401</h1>
+    <h2>Войдите в свой аккаунт для получения доступа, перейдите 
+    <a href="{{ url_for('router_auth.login') }}">сюда</a> 
+    для входа в аккаунт.</h2>
+</div>
+
+{% endblock content %}

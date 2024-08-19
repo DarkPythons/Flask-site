@@ -122,5 +122,6 @@ def profile():
     orm = OrmRequest()
     user_email = current_user.get_email()
     user_info = orm.get_user_by_email(user_email)
+
     date: dict = creating_dict_for_profile(user_info)
     return render_template('auth/profile.html', title='Профиль', date=date)
