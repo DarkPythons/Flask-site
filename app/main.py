@@ -6,6 +6,7 @@ from router_main import main_router
 from auth.router_auth import auth_router
 from auth.UserLogin import UserLogin
 from error_handlers import error_router
+from converter.router_converter import converter_router
 
 db_setting = BaseSettingsDataBase()
 
@@ -35,6 +36,7 @@ def load_user(user_id):
 app.register_blueprint(main_router, url_prefix="/")
 app.register_blueprint(auth_router, url_prefix='/auth')
 app.register_blueprint(error_router)
+app.register_blueprint(converter_router, url_prefix="/convert")
 
 
 

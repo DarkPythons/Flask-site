@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "petprojectbyflask"
+name = "flask-site"
 version = "1.0.0"
 description = ""
 authors = ["DarkPythons <author@mail>"]

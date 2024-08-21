@@ -6,3 +6,15 @@
     margin-left: 30px;
 }
 
+.content-gorizontal {
+    justify-content: center;
+    position: relative;
+
+    top: 50%;
+    padding-top: 35%;
+    display: flex;
+    margin: 100px;
+    align-items: center;
+    background-color: white;
+
+}
