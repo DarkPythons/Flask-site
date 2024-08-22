@@ -7,14 +7,42 @@
 }
 
 .content-gorizontal {
-    justify-content: center;
     position: relative;
+    box-sizing: border-box;
 
     top: 50%;
-    padding-top: 35%;
-    display: flex;
-    margin: 100px;
-    align-items: center;
-    background-color: white;
+    padding-top: 10%;
+    justify-content:space-between
 
+}
+
+.positons-left {
+    float: left;
+}
+
+.positons-right {
+    float:right;
+}
+
+.buttun-confirm-curr {
+    justify-content: center;
+    text-align: center;
+    padding-top: 10%;
+}
+
+.padd-item {
+    padding-top: 15%;
+}
+
+
+.color-go {
+    background-color: rgb(9, 106, 9);
+    border: 2px;
+    border-color: black;
+}
+
+
+.result-curr {
+    color:rgb(255, 255, 255);
+    font-weight:bold
 }

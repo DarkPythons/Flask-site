@@ -8,4 +8,4 @@ converter_router = Blueprint('converter_router', __name__,
 def converter():
     if request.method == 'POST':
         pass
-    return render_template('converter/converter_page.html')
+    return render_template('converter/converter_page.html', title='Конвертер валюты')
