@@ -27,6 +27,11 @@ def handler404(error):
     """Обработчик ошибки 404 (когда пользователь перешёл на url, которого нет на сайте)"""
     return (render_template('page404.html', title='Ошибка 404'), 404)
 
+@error_router.app_errorhandler(405)
+def handler405(error):
+    """Обработчик ошибки 405 (пользователь отправил метод запроса, который не поддерживается url)"""
+    return (render_template('page405.html', title='Ошибка 405'), 405)
+
 @error_router.app_errorhandler(500)
 def handler500(error):
     """
