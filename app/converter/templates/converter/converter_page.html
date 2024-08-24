@@ -5,7 +5,12 @@
     <div class='content-gorizontal'>
         <div class='text-center'>
 
-            <h1 class='currency-text'>Конвертер валюты</h1> 
+            <h1 class='currency-text'>Конвертер валюты</h1>
+            <div style='margin-left:30%; margin-right:30%;'> 
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class='flash {{ cat }}'>{{ msg }}</div>
+            {% endfor %}
+            </div>
                 <div class='positons-left'>
                     <form action="" method="post" id="myform" class='form-convert'> 
                         <h2>Из:</h2> 

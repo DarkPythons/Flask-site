@@ -53,3 +53,19 @@
     font-size: 25px;
     padding-top: 30px;
 }
+
+.flash {
+    padding:10px;
+    margin: 0px;
+    margin-bottom: 10px;
+    font-size:20px;
+}
+
+.flash.success {
+    border: 1px solid #13742e;
+    background: rgb(64, 179, 33);
+}
+.flash.error {
+    border: 1px solid rgb(149, 13, 13);
+    background: rgb(195, 74, 74);
+}

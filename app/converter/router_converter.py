@@ -11,6 +11,7 @@ converter_router = Blueprint('converter_router', __name__,
 @converter_router.route('/', methods=['GET', 'POST'])
 def converter():
     if request.method == 'POST':
+        flash('Конвертация прошла успешно', category='success')
         api_key = setting_currency.KEY_CURRENCY_API
         from_valute = request.form['from_c']
         to_valut = request.form['to_c']
