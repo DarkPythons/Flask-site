@@ -8,6 +8,9 @@ converter_router = Blueprint('converter_router', __name__,
     static_folder='static', 
     template_folder='templates')
 
+
+
+
 @converter_router.route('/', methods=['GET', 'POST'])
 def converter():
     if request.method == 'POST':
@@ -29,6 +32,7 @@ def converter():
         response_result_convert = response_json['rates'][form_to_currency_code]['rate_for_amount']
         response_result_convert_round = round(float(response_result_convert), 2)
 
+        
 
         return render_template('converter/converter_page.html', title='Конвертер валюты', result_convert=response_result_convert_round, amount=response_amount_round, from_currency_code=response_from_currency_code, from_currency_name=response_from_currency_name, to_currency_code=form_to_currency_code, to_currency_name=response_to_currency_name, last_update_date=last_update_date)
 
