@@ -22,10 +22,10 @@
 
                         <p></p>
 
-                        <select required name="from_c" id="from_c" class='form-control' size='1'> 
+                        <select required name="from_currency" id="from_currency" class='form-control' size='1'> 
                             <option value="">Наименование валюты</option> 
-                            {% if from_c_name %} 
-                            <option value="{{from_c_code}}" selected>{{from_c_name}}</option> 
+                            {% if from_currency_name %} 
+                            <option value="{{from_currency_code}}" selected>{{from_currency_name}}</option> 
                             {% endif %} 
                             <option value="EUR">Euro (EUR)</option> 
                             <option value="RUB">Russian Ruble (RUB)</option>
@@ -189,15 +189,15 @@
                 <div class='positons-right'>
                     <h2>В:</h2>
                     <div class='form-floating'>
-                    <input type="number" id='ResultCurrency' placeholder="Result"  class='form-control' class='result-curr' value="{{result}}" readonly> 
+                    <input type="number" id='ResultCurrency' placeholder="Result"  class='form-control' class='result-curr' value="{{result_convert}}" readonly> 
                     <label for='ResultCurrency'>Результат:</label>
 
                     </div>
                     <p></p>
-                    <select required name="to_c" id="to_c" class='form-control'> 
+                    <select required name="to_currency" id="to_currency" class='form-control'> 
                         <option value="">Наименование валюты</option> 
-                        {% if to_c_name %} 
-                        <option value="{{to_c_code}}" selected>{{to_c_name}}</option> 
+                        {% if to_currency_name %} 
+                        <option value="{{to_currency_code}}" selected>{{to_currency_name}}</option> 
                         {% endif %} 
 
                         <option value="EUR">Euro (EUR)</option> 
@@ -363,7 +363,7 @@
                 </div> 
                 </form> 
                 {% if time %} 
-                <h4 class='last-update' style="">** Последнее обновление данных: {{time}}</h4> 
+                <h4 class='last-update' style="">** Последнее обновление данных: {{last_update_date}}</h4> 
                 {% endif %} 
            
 
