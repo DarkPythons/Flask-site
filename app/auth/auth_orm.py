@@ -3,7 +3,7 @@ from sqlalchemy import select
 
 
 
-class OrmRequest:
+class AuthOrm:
     
     def __init__(self):
         from database import Users, db

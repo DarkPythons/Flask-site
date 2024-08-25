@@ -1,6 +1,6 @@
 import datetime
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import select, ForeignKey
+from sqlalchemy import select, ForeignKey, BINARY
 from flask_sqlalchemy import SQLAlchemy
 
 from main import app
@@ -18,11 +18,14 @@ class Users(db.Model):
     def __repr__(self):
         return f"<users {self.id}>"
 
-class news(db.Model):
+class News(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
+    anons : Mapped[str] = mapped_column(db.String(50), nullable=False)
     title : Mapped[str] = mapped_column(db.String(100), nullable=False)
-    text : Mapped[str] = mapped_column(db.String(500), nullable=False)
+    text : Mapped[str] = mapped_column(db.String(15000), nullable=False)
     views : Mapped[int] = mapped_column(db.Integer, nullable=False, default=0)
+    photo : Mapped[bin] = mapped_column(db.LargeBinary, nullable=True)
+
     author_id : Mapped[int] = mapped_column(ForeignKey(Users.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
  
     def __repr__(self):

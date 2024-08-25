@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 
-from .auth_orm import OrmRequest
+from .auth_orm import AuthOrm
 from .UserLogin import UserLogin
 from .utils import data_validate, creating_dict_for_profile
 
@@ -27,7 +27,7 @@ def create_user_session(*, user):
 
 def function_by_login():
     """Функция для обработки данных и создания сессии, когда пользователь выполнял аунтефикацию"""
-    orm = OrmRequest()
+    orm = AuthOrm()
     user_from_orm = orm.get_user_by_email(request.form['email'])
     if user_from_orm:
         password_valid = orm.validate_password_user(user_from_orm['psw'], request.form['psw'])
@@ -43,7 +43,7 @@ def function_by_register():
     """Функция для обработки данных и создания сессии, когда пользователь выполнял 
     регистрацию аккаунта
     """
-    orm = OrmRequest()
+    orm = AuthOrm()
     try:
         user = orm.get_user_by_email(request.form['email'])
         if not user:
@@ -119,7 +119,7 @@ def profile():
     Получение своего профиля, доступен только пользователям с сессией.
     Формирует данные о пользователе и возвращает их в html странице.
     """
-    orm = OrmRequest()
+    orm = AuthOrm()
     user_email = current_user.get_email()
     user_info = orm.get_user_by_email(user_email)
 
