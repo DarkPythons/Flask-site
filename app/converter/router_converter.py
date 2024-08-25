@@ -10,13 +10,21 @@ converter_router = Blueprint('converter_router', __name__,
 
 
 def get_json_response_from_currency_api(*, from_currency_name, to_currency_name, amount) -> dict:
+    """Метод для обращения к API по конвертации валюты, возвращает json ответа"""
+
     api_key = setting_currency.KEY_CURRENCY_API
-    url = f'https://api.getgeoapi.com/v2/currency/convert?api_key={api_key}&from{from_currency_name}&to={to_currency_name}&amount={amount}&format=json'
+    url = (f'https://api.getgeoapi.com/v2/currency/convert?api_key={api_key}'
+    f'&from{from_currency_name}'
+    f'&to={to_currency_name}'
+    f'&amount={amount}'
+    f'&format=json'
+    )
     response = requests.get(url, headers=setting_currency.HEADERS_BY_REQ)
     response_json = response.json()
     return response_json
 
-def confirm_data_by_response(*, response_json, form_to_currency_code):
+
+def confirm_data_by_response(*, response_json, form_to_currency_code) -> dict:
     """
     Метод, который на основе полученных данных из API, формирует dict,
     для отправки на фронтенд ответа пользователю.
@@ -43,31 +51,47 @@ def confirm_data_by_response(*, response_json, form_to_currency_code):
 
 
 def creating_response_currency() -> dict:
-    #Получение данных из формы
-    form_from_currency_name = request.form['from_currency']
-    form_to_currency_code = request.form['to_currency']
-    form_amount = request.form['amount']
+    status_code = 200
+    try:
+        #Получение данных из формы
+        form_from_currency_name = request.form['from_currency']
+        form_to_currency_code = request.form['to_currency']
+        form_amount = request.form['amount']
 
-    response_json = get_json_response_from_currency_api(
-        from_currency_name=form_from_currency_name, 
-        to_currency_name=form_to_currency_code, 
-        amount=form_amount
-        )
-    
-    full_data_dict = confirm_data_by_response(response_json=response_json, form_to_currency_code=form_to_currency_code)
+        response_json = get_json_response_from_currency_api(
+            from_currency_name=form_from_currency_name, 
+            to_currency_name=form_to_currency_code, 
+            amount=form_amount
+            )
+        full_data_dict = confirm_data_by_response(
+            response_json=response_json,
+            form_to_currency_code=form_to_currency_code
+            )        
+    except KeyError as Error:
+        flash('Введены не все данные для выполнения запрооса.', category='error')
+    except requests.JSONDecodeError as Error:
+        flash('Ошибка сервера, обратитесь к этой функции чуть позже.', category='error')
+    except (TypeError, ValueError) as Error:
+        flash('Возникла ошибка при конвертации полученных данных от сервера.', category='error')
+    except Exception as Error:
+        flash('Ошибка сервера', category='error')
+    else:
+        return {'status_code' : status_code, 'full_data_dict' : full_data_dict}
+    status_code = 500
+    return {'status_code' : status_code}
 
   
-    return full_data_dict
+    
 
 @converter_router.route('/', methods=['GET', 'POST'])
 def converter():
     if request.method == 'POST':
         flash('Конвертация прошла успешно', category='success')
-
         data: dict = creating_response_currency()
-        
-
-        return render_template('converter/converter_page.html', title='Конвертер валюты', **data)
-
+        if data['status_code'] == 200:
+            full_data_by_sending = data['full_data_dict']
+            return render_template('converter/converter_page.html', 
+                title='Конвертер валюты', 
+                **full_data_by_sending)
     return render_template('converter/converter_page.html', title='Конвертер валюты')
 
