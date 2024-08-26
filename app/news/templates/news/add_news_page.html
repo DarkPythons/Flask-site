@@ -9,7 +9,8 @@
     <div class="row g-3" bis_skin_checked="1">
         <div class='center-div'>
       <div class="col-10" bis_skin_checked="1">
-        <label for="Anons" class="form-label">Заголовок новости (название, которое будет отображаться в ленте)</label>
+        <label for="Anons" class="form-label">Заголовок новости 
+          (название, которое будет отображаться в ленте)</label>
         <input type="text" class="form-control" id="Anons"  name="anons" required>
         <div class="invalid-feedback" bis_skin_checked="1">
           Введите корректный заголовок.
@@ -26,28 +27,40 @@
           </div>
         </div>
     </div>
-
-
-
       <div class="col-12" bis_skin_checked="1">
         <label for="username" class="form-label">Текст новости</label>
         <div class="has-validation" bis_skin_checked="1">
-          <textarea type="Text" class="form-control" id="Text" required="" row="40" cols="100" name='text'></textarea>
+          <textarea type="Text" class="form-control" id="Text" required="" row="40" 
+          cols="100" name='text'></textarea>
         <div class="invalid-feedback" bis_skin_checked="1">
             Ваш текст не прошёл проверку.
           </div>
         </div>
       </div>
 
+      <script>
+        function upload_check()
+    {
+    var upl = document.getElementById("CustomPhoto");
+    /* Ограничение размера файла до 1 мегабайта */
+    var max = 1 * 1024 * 1024
 
-      <label class="form-label" for="customFile">Выберите фото, которое будет показываться пользователям в ленте новостей</label>
-      <div class="has-validation" bis_skin_checked="1">
-        <input name='photo' type="file" class="form-control" id="customFile" />
+    if(upl.files[0].size > max)
+    {
+       alert("Вы пытаетесь добавить слишком большой файл!");
+       upl.value = "";
+    }
+    };
+      </script>
+
+      <label class="form-label" for="CustomPhoto">Выберите фото, которое будет показываться 
+        пользователям в ленте новостей (до 1 мегабайта)</label>
+      <div class="" bis_skin_checked="1">
+        <input name='photo' type="file" accept=".jpg,.png" onchange="upload_check()" 
+        class="form-control" id="CustomPhoto" />
         </div>
       </div>
 
-
-    
 
 
 

@@ -1,5 +1,10 @@
 .padding_styles {
     padding-top: 250px;
+    padding-bottom: 20%;
+}
+
+.center-text {
+    text-align: center;
 }
 
 .get_indentation {
