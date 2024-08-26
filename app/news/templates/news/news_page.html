@@ -21,6 +21,26 @@
       <div class="container" bis_skin_checked="1">
   
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" bis_skin_checked="1">
+         {% for one_new in news_data_list %} 
+          <div class="col" bis_skin_checked="1">
+            <div class="card shadow-sm" bis_skin_checked="1">
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">12</text></svg>
+              <div class="card-body" bis_skin_checked="1">
+                <h3 class='card-text'>{{ one_new.anons }}</h3>
+                <p class="card-text">{{ one_new.text[:150] }}...</p>
+                <div class="d-flex justify-content-between align-items-center" bis_skin_checked="1">
+                  <div class="btn-group" bis_skin_checked="1">
+                    <a href="/news/view_news/{{ one_new.id }}" type="button" class="btn btn-sm btn-primary">Читать</a>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-body-secondary">{{ one_new.views }} просмотров</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+
           <div class="col" bis_skin_checked="1">
             <div class="card shadow-sm" bis_skin_checked="1">
               <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
@@ -36,6 +56,9 @@
               </div>
             </div>
           </div>
+
+
+
         </div>
       </div>
     </div>
