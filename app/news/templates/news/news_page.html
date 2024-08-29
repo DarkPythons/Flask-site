@@ -24,9 +24,7 @@
          {% for one_new in news_data_list %} 
           <div class="col" bis_skin_checked="1">
             <div class="card shadow-sm" bis_skin_checked="1">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                <img src='/news/image_news/1' width='100%' height='200px'>
-              </svg>
+              <img src='/news/image_news/1' class="bd-placeholder-img card-img-top" width="100%" height="225">
               <div class="card-body" bis_skin_checked="1">
                 <h3 class='card-text'>{{ one_new.anons }}</h3>
                 <p class="card-text">{{ one_new.text[:150] }}...</p>
