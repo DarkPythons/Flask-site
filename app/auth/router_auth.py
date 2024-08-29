@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from flask_login import current_user, login_user, login_required, logout_user
 
 from .auth_orm import AuthOrm
@@ -107,6 +107,9 @@ def logout():
     Забирает сессию у пользователя и возвращает redirect на url функции аутентификации.
     """
     logout_user()
+    session.clear()
+    if session.get('was_once_logged_in'):
+        del session['was_once_logged_in']
     flash("Вы вышли из аккаунта", category='success')
     return redirect(url_for('.login'))
 
@@ -122,6 +125,8 @@ def profile():
     orm = AuthOrm()
     user_email = current_user.get_email()
     user_info = orm.get_user_by_email(user_email)
-
-    date: dict = creating_dict_for_profile(user_info)
+    try:
+        date: dict = creating_dict_for_profile(user_info)
+    except TypeError as Error:
+        return redirect(url_for('.logout'))
     return render_template('auth/profile.html', title='Профиль', date=date)

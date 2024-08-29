@@ -1,4 +1,4 @@
-
+from flask import redirect, url_for
 
 
 
@@ -20,8 +20,10 @@ class UserLogin():
     def is_anonymous(self):
         return False
     def get_id(self):
-        return str(self.__user['id'])
-
+        try:
+            return str(self.__user['id'])
+        except TypeError:
+            return redirect(url_for('router_auth.logout'))
     #__user - хранит полученные данные из базы
     def get_name(self):
         return self.__user['username'] if self.__user else "Без имени"

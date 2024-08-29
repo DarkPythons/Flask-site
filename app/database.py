@@ -18,18 +18,24 @@ class Users(db.Model):
     def __repr__(self):
         return f"<users {self.id}>"
 
+
 class News(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
     anons : Mapped[str] = mapped_column(db.String(50), nullable=False)
     title : Mapped[str] = mapped_column(db.String(100), nullable=False)
     text : Mapped[str] = mapped_column(db.String(15000), nullable=False)
     views : Mapped[int] = mapped_column(db.Integer, nullable=False, default=0)
-    photo : Mapped[bin] = mapped_column(db.LargeBinary, nullable=True)
+    
 
     author_id : Mapped[int] = mapped_column(ForeignKey(Users.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
  
     def __repr__(self):
         return f"<new {self.id}>"
+    
+class News_Image(db.Model):
+    id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
+    photo : Mapped[bin] = mapped_column(db.LargeBinary, nullable=True)
+    f_id_new : Mapped[int] = mapped_column(ForeignKey(News.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=True)
 
 class UserOrm:
     def __init__(self, db):

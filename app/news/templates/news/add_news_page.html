@@ -5,7 +5,7 @@
 <div class='centering-form'>
 <div class='container'>
 
-<form class="needs-validation" method='post' action=''>
+<form class="needs-validation" method='post' action='' enctype="multipart/form-data">
     <div class="row g-3" bis_skin_checked="1">
         <div class='center-div'>
       <div class="col-10" bis_skin_checked="1">
@@ -56,7 +56,7 @@
       <label class="form-label" for="CustomPhoto">Выберите фото, которое будет показываться 
         пользователям в ленте новостей (до 1 мегабайта)</label>
       <div class="" bis_skin_checked="1">
-        <input name='photo' type="file" accept=".jpg,.png" onchange="upload_check()" 
+        <input  type="file" name='photo' accept=".jpg,.png" onchange="upload_check()" 
         class="form-control" id="CustomPhoto" />
         </div>
       </div>
