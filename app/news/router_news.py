@@ -22,9 +22,12 @@ def news_page():
 def get_image_by_news_id(news_id: int):
 
 
-    photo_orm = ImageOrm()
-    photo_from_db = photo_orm.get_photo_from_db(f_id_new=news_id)
-    response = make_response(photo_from_db)
+    image_orm = ImageOrm()
+    photo = image_orm.get_photo_from_db(f_id_new=news_id)
+    if not photo:
+        with open('static/image/photo_index.png', 'rb') as photo_file:
+            photo = photo_file.read()
+    response = make_response(photo)
     response.headers['Content-Type'] = 'image/jpg'
     return response
 
@@ -34,7 +37,7 @@ def get_image_by_news_id(news_id: int):
 def add_news_page():
     if request.method == 'POST':
         new_orm = NewsOrm()
-        photo_orm = ImageOrm()
+        image_orm = ImageOrm()
         anons = request.form['anons']
         title = request.form['title']
         text = request.form['text']
@@ -44,12 +47,14 @@ def add_news_page():
         if photo:
             img = photo.read()
         news_id_in_db = new_orm.add_news_orm(anons=anons, title=title, text=text, author_id=user_id)
-        photo_orm.add_new_photo_news(img=img, f_id_new=news_id_in_db)
+        image_orm.add_new_photo_news(img=img, f_id_new=news_id_in_db)
         return redirect(url_for('.news_page'))
 
     return render_template('add_news_page.html', title='Добавление статьи')
 
-@news_router.route('/view_news/<int:number_page>')
+@news_router.route('/view_news/<int:number_news>')
 @login_required
-def view_news_page(number_page):
-    return f"Страница номер {number_page}"
+def view_news_page(number_news:int):
+    new_orm = NewsOrm()
+    new_orm.add_news_view(news_id=number_news)
+    return f"Страница номер {number_news}"

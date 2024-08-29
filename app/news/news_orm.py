@@ -23,6 +23,11 @@ class NewsOrm:
             return result_id[0]
         return result_id
     
+    def add_news_view(self, *, news_id):
+        query = update(self.News).values(views=(self.News.views+1)).where(self.News.id == news_id)
+        self.session.execute(query)
+        self.session.commit()
+
 class ImageOrm:
     def __init__(self):
         from database import News_Image, db
@@ -41,3 +46,4 @@ class ImageOrm:
         if photo_from_orm:
             return photo_from_orm.one()[0]
         return None
+
