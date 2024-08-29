@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, make_response
+from flask import Blueprint, render_template, request, redirect, url_for, make_response,flash
 from flask_login import login_required, current_user
 
 from .news_orm import NewsOrm, ImageOrm
@@ -8,20 +8,23 @@ news_router = Blueprint('news_router', __name__,
     template_folder='templates/news'                    
     )
 
-
-
 @news_router.route('/')
 def news_page():
+    """Функция для отображения первой новостной страницы"""
     new_orm = NewsOrm()
     news_list: list[dict, dict] = new_orm.get_first_news_orm()
     return render_template('news_page.html', title='Новостная страница', news_data_list=news_list)
 
 
+@news_router.route('/page/<int:page_num>')
+def pages_scrolling(page_num: int):
+    """Функция для отображения конкретной страницы новостей"""
+    pass
+
+
 @news_router.route('/image_news/<int:news_id>')
 @login_required
 def get_image_by_news_id(news_id: int):
-
-
     image_orm = ImageOrm()
     photo = image_orm.get_photo_from_db(f_id_new=news_id)
     if not photo:
@@ -48,6 +51,7 @@ def add_news_page():
             img = photo.read()
         news_id_in_db = new_orm.add_news_orm(anons=anons, title=title, text=text, author_id=user_id)
         image_orm.add_new_photo_news(img=img, f_id_new=news_id_in_db)
+        flash('Добавление статьи прошло успешно', category='success_news')
         return redirect(url_for('.news_page'))
 
     return render_template('add_news_page.html', title='Добавление статьи')

@@ -70,6 +70,12 @@
     border: 1px solid #13742e;
     background: rgb(64, 179, 33);
 }
+
+.success_news {
+    border: 1px solid #38142c;
+    background: rgb(68, 37, 118);
+}
+
 .flash.error {
     border: 1px solid rgb(149, 13, 13);
     background: rgb(195, 74, 74);

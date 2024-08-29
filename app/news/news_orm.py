@@ -10,7 +10,7 @@ class NewsOrm:
         self.News: News = News
 
     def get_first_news_orm(self):
-        query = select(self.News.id, self.News.title, self.News.text, self.News.views, self.News.author_id, self.News.anons).limit(10)
+        query = select(self.News.id, self.News.title, self.News.text, self.News.views, self.News.author_id, self.News.anons).order_by(self.News.id.desc()).limit(10)
         result = self.session.execute(query)
         return result.mappings().all()
 

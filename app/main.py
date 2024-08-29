@@ -1,10 +1,9 @@
 from flask import Flask
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager
 
 from config import BaseSettingsApp, BaseSettingsDataBase
 from router_main import main_router
 from auth.router_auth import auth_router
-from auth.UserLogin import UserLogin
 from error_handlers import error_router
 from converter.router_converter import converter_router
 from news.router_news import news_router
@@ -15,6 +14,8 @@ app_settings = BaseSettingsApp()
 
 
 app = Flask(__name__)
+
+
 
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = app_settings.SECRET_KEY
@@ -39,7 +40,6 @@ app.register_blueprint(auth_router, url_prefix='/auth')
 app.register_blueprint(error_router)
 app.register_blueprint(converter_router, url_prefix="/convert")
 app.register_blueprint(news_router, url_prefix='/news')
-
 
 if __name__ == "__main__":
     from database import db
