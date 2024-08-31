@@ -3,6 +3,7 @@
     padding-bottom: 20%;
 }
 
+
 .center-text {
     text-align: center;
 }
@@ -74,6 +75,11 @@
 .success_news {
     border: 1px solid #38142c;
     background: rgb(68, 37, 118);
+}
+
+.error_news {
+    border: 1px solid #4b1515;
+    background: rgb(108, 7, 7);
 }
 
 .flash.error {

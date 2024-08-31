@@ -19,7 +19,13 @@ def news_page():
 @news_router.route('/page/<int:page_num>')
 def pages_scrolling(page_num: int):
     """Функция для отображения конкретной страницы новостей"""
-    pass
+    if page_num > 0:
+        new_orm = NewsOrm()
+        news_list: list[dict, dict] = new_orm.get_news_by_page_news(page_num=page_num)
+        return render_template('news_page.html', title='Новостная страница', news_data_list=news_list)
+    flash('Невозможно найти страницу с отрицательным индексом', category='error_news')
+    return redirect(url_for('.news_page'))
+
 
 
 @news_router.route('/image_news/<int:news_id>')
