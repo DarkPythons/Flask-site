@@ -46,7 +46,11 @@
     border: 2px;
     border-color: black;
 }
-
+.paggination-bar {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
 
 .result-curr {
     color:rgb(255, 255, 255);

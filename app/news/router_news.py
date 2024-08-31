@@ -22,7 +22,7 @@ def pages_scrolling(page_num: int):
     if page_num > 0:
         new_orm = NewsOrm()
         news_list: list[dict, dict] = new_orm.get_news_by_page_news(page_num=page_num)
-        return render_template('news_page.html', title='Новостная страница', news_data_list=news_list)
+        return render_template('news_page.html', title='Новостная страница', news_data_list=news_list, current_page=page_num)
     flash('Невозможно найти страницу с отрицательным индексом', category='error_news')
     return redirect(url_for('.news_page'))
 

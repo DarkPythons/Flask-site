@@ -43,8 +43,22 @@
                 </div>
               </div>
             </div>
+
+
           </div>
+
+
           {% endfor %}
+            <div class='paggination-bar'>
+       <nav aria-label="Page navigation example">
+        <ul class="pagination" styles=''>
+          {% if current_page != 1 %}
+          <li class="page-item"><a class="page-link" href="/news/page/{{ current_page-1 }}">Предыдущая</a></li>
+          {% endif %}
+          <li class="page-item "><a class="page-link" href="/news/page/{{ current_page+1 }}">Следующая</a></li>
+        </ul>
+      </nav>
+    </div>
         {% else %}
           <div class=' text-center container'>
           <h1>Новостей на странице пока нет</h1>
