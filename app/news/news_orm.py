@@ -31,7 +31,19 @@ class NewsOrm:
 
     def get_news_by_page_news(self, *, page_num: int):
         offset_param = (page_num-1) * self.num_of_news_on_one_page
-        query = select(self.News.id, self.News.title, self.News.text, self.News.views, self.News.author_id, self.News.anons).offset(offset_param).limit(self.num_of_news_on_one_page)
+        query = select(
+            self.News.id, self.News.title, self.News.text, 
+            self.News.views, self.News.author_id, self.News.anons
+            # Делаем отсуп + ограничение количества новостей
+            ).offset(offset_param).limit(self.num_of_news_on_one_page)
+        result = self.session.execute(query)
+        return result.mappings().all()
+    
+    def get_info_by_id_new(self, *, news_id: int):
+        query = select(
+            self.News.id, self.News.title, self.News.text,
+            self.News.views, self.News.author_id, self.News.anons
+        ).where(self.News.id == news_id)
         result = self.session.execute(query)
         return result.mappings().all()
 
