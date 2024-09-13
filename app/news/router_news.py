@@ -59,20 +59,23 @@ def get_image_by_news_id(news_id: int):
 @login_required
 def add_news_page():
     if request.method == 'POST':
-        new_orm = NewsOrm()
-        image_orm = ImageOrm()
-        anons = request.form['anons']
-        title = request.form['title']
-        text = request.form['text']
-        photo = request.files['photo']
-        user_id = current_user.get_id()
-        img = None
-        if photo:
-            img = photo.read()
-        news_id_in_db = new_orm.add_news_orm(anons=anons, title=title, text=text, author_id=user_id)
-        image_orm.add_new_photo_news(img=img, f_id_new=news_id_in_db)
-        flash('Добавление статьи прошло успешно', category='success_news')
-        return redirect(url_for('.news_page'))
+        try:
+            new_orm = NewsOrm()
+            image_orm = ImageOrm()
+            anons = request.form['anons']
+            title = request.form['title']
+            text = request.form['text']
+            photo = request.files['photo']
+            user_id = current_user.get_id()
+            img = None
+            if photo:
+                img = photo.read()
+            news_id_in_db = new_orm.add_news_orm(anons=anons, title=title, text=text, author_id=user_id)
+            image_orm.add_new_photo_news(img=img, f_id_new=news_id_in_db)
+            flash('Добавление статьи прошло успешно', category='success_news')
+            return redirect(url_for('.news_page'))
+        except:
+            flash('Ошибка добавления статьи в базу, проверьте корректность текста.', category='error')
 
     return render_template('add_news_page.html', title='Добавление статьи')
 
@@ -86,6 +89,6 @@ def view_news_page(number_news:int):
     news_info_from_db =  new_orm.get_info_by_id_new(news_id=number_news)
     if news_info_from_db:
         news_info = news_info_from_db[0]
-        return news_info
+        return render_template('news_number_page.html', title=f'Новость {news_info['id']}', data_news=news_info)
     
     return f"Новости с таким id нет"

@@ -104,3 +104,35 @@
 .center-div {
     margin-left: 8%;
 }
+.news-title {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: 200%;
+}
+.news-text {
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: justify;
+    font-size: 150%;
+    padding-bottom: 1%;
+}
+
+.news-views {
+    text-align: left;
+    font-size: 30px;
+    padding-top: 2%;
+
+}
+
+.footer-news {
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: justify;
+    font-size: 150%;
+    padding-top: 2px;
+} 
+
+.button-news-page {
+    padding-top: 2%;
+    padding-bottom: 20%;
+}

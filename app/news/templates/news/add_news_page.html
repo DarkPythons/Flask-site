@@ -9,6 +9,9 @@
     <div class="row g-3" bis_skin_checked="1">
         <div class='center-div'>
       <div class="col-10" bis_skin_checked="1">
+          {% for cat, msg in get_flashed_messages(True) %}
+          <div class='flash {{ cat }}'>{{ msg }}</div>
+          {% endfor %}
         <label for="Anons" class="form-label">Заголовок новости 
           (название, которое будет отображаться в ленте)</label>
         <input type="text" class="form-control" id="Anons"  name="anons" required>

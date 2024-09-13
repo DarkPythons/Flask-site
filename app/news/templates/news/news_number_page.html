@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class='center-text'>
+    <div class="cover-container text-bg-dark">
+        <main class="px-3">
+            <div class=''>
+            <img src='/news/image_news/{{ data_news.id }}' class="bd-placeholder-img d-block mx-auto border rounded-3" width="50%" height="50%">
+            </div>
+            
+            <div class='news-title'>
+                <h1>{{ data_news.title }}</h1>
+            </div>
+
+            <div class='news-text'>
+                <p>{{ data_news.text }}</p>
+
+            </div>
+
+            <div class='footer-news'>
+                <div class='news-views text-body'>
+                    <p>Количество просмотров: {{ data_news.views }}</p>
+                </div>
+                <div class='button-news-page'>
+                    <a href='/news/' type="button" 
+                    class="btn btn-outline-primary btn-lg px-4 active">
+                    На главную</a>
+                </div>
+            </div>
+
+
+
+        </main>
+      </div>
+    </div>
+
+{% endblock content %}
