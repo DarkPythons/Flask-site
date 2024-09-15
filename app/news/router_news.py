@@ -24,14 +24,46 @@ def news_page():
     """Функция для отображения первой новостной страницы"""
     new_orm = NewsOrm()
     news_list: list[dict, dict] = new_orm.get_first_news_orm()
-    user_id = current_user.get_id()
+    user_id: str = current_user.get_id()
     return render_template(
         'news_page.html', 
         title='Новостная страница', 
         news_data_list=news_list, 
         current_page=1,
-        user_id_viewer=user_id
+        # Для правильного сравнения на сайте нужен тип строки
+        user_id_viewer=int(user_id)
         )
+
+def get_authencticate_user():
+    user_id = current_user.get_id()
+    if user_id:
+        user_id = int(user_id)
+        return user_id
+
+    else:
+        flash('Войдите в аккаунт', category='error')
+        return redirect('/auth/login')       
+
+@news_router.route('/edit_news/<int:news_num>')
+@login_required
+def edit_new_by_num(news_num: int):
+    user_id = get_authencticate_user()
+    new_orm = NewsOrm()
+    news_info_from_db =  new_orm.get_info_by_id_new(news_id=news_num)
+    if news_info_from_db:
+        data_news = news_info_from_db[0]     
+        # Если человек и вправду являеется создателем новости
+        if data_news['author_id'] == user_id:
+            if request.method == 'POST':
+                pass
+            return render_template('news_edit.html', title='Редактирование новости', 
+                data_news=data_news)
+        else:
+            flash('Вы не можете редактировать чужие новости', category='error_news')
+            return redirect('/news')
+        
+  
+
 
 
 @news_router.route('/page/<int:page_num>')

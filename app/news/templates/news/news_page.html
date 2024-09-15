@@ -37,7 +37,10 @@
                 <div class="d-flex justify-content-between align-items-center" bis_skin_checked="1">
                   <div class="btn-group" bis_skin_checked="1">
                     <a href="/news/view_news/{{ one_new.id }}" type="button" class="btn btn-sm btn-primary">Читать</a>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    {% if one_new.author_id == user_id_viewer %}
+                      <a href="/news/edit_news/{{ one_new.id }}" type="button" class="btn btn-sm
+                      btn-outline-secondary">Изменить</a>
+                    {% endif %}
                   </div>
                   <small class="text-body-secondary">{{ one_new.views }} просмотров</small>
                 </div>
