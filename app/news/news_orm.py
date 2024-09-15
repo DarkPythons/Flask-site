@@ -45,7 +45,20 @@ class NewsOrm:
             self.News.views, self.News.author_id, self.News.anons
         ).where(self.News.id == news_id)
         result = self.session.execute(query)
-        return result.mappings().all()
+        return result.mappings().all()  
+    
+    def update_news_in_db(self, *, new_anons: str, new_title: str, 
+            new_text: str, number_news: int):
+        """
+        Функция для обновления данных новостив в базе
+        """
+        query = update(self.News).values(
+            anons=new_anons,
+            title=new_title, 
+            text=new_text
+            ).where(self.News.id==number_news)
+        self.session.execute(query)
+        self.session.commit()
 
 
 class ImageOrm:
@@ -69,3 +82,9 @@ class ImageOrm:
         except:
             return None
 
+    def update_photo_by_news_id(self, *, new_img: bin,number_news: int):
+        query = update(self.News_Image).values(photo=new_img).where(
+            self.News_Image.f_id_new==number_news
+            )
+        self.session.execute(query)
+        self.session.commit()

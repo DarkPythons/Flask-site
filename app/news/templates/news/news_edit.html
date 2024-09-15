@@ -3,25 +3,29 @@
 {% block content %}
 <div class='centering-form'>
     <div class='container'>
-        <div class='padding_buttom'>
-        <img src='/news/image_news/{{ data_news.id }}' class="bd-placeholder-img d-block mx-auto border rounded-3" width="40%" height="40%">
+        <div class='news-edit-text'>
+
+    <form class="needs-validation" method='post' action='' enctype="multipart/form-data">
+                <div class='padding_buttom'>
+        <img src='/news/image_news/{{ data_news.id }}' class="bd-placeholder-img d-block mx-auto border rounded-3" width="600px" height="600px">
         </div>
+            
+              {% for cat, msg in get_flashed_messages(True) %}
+              <div class='flash {{ cat }}'>{{ msg }}</div>
+              {% endfor %}
+        
         <label class="form-label" for="CustomPhoto">Выберите новое фото (до 1 мегабайта)</label>
         <div class='padding_buttom' bis_skin_checked="1">
             <input  type="file" name='photo' accept=".jpg,.png" onchange="upload_check()" 
             class="form-control" id="CustomPhoto" />
         </div>
-
-    <form class="needs-validation" method='post' action='' enctype="multipart/form-data">
         <div class="row g-3" bis_skin_checked="1">
             <div class='center-div'>
           <div class="col-10" bis_skin_checked="1">
-              {% for cat, msg in get_flashed_messages(True) %}
-              <div class='flash {{ cat }}'>{{ msg }}</div>
-              {% endfor %}
+
             <label for="Anons" class="form-label">Заголовок новости 
               (название, которое будет отображаться в ленте)</label>
-            <input type="text" class="form-control" id="Anons" name="anons" value={{ data_news.anons }} required>
+            <input type="text" class="form-control" id="Anons" name="anons" value='{{ data_news.anons }}' required>
             <div class="invalid-feedback" bis_skin_checked="1">
               Введите корректный заголовок.
             </div>
@@ -31,7 +35,7 @@
         <div class='center-div'>
             <div class="col-10" bis_skin_checked="1">
               <label for="NameNews" class="form-label">Название новости</label>
-              <input type="text" class="form-control" id="NameNews" value={{ data_news.title }} name="title" required>
+              <input type="text" class="form-control" id="NameNews" value='{{ data_news.title }}' name="title" required>
               <div class="invalid-feedback" bis_skin_checked="1">
                 Введите корректный заголовок.
               </div>
@@ -57,6 +61,7 @@
       </form>
     </div>
     </div>
+</div>
 <script>
     function upload_check()
     {
@@ -71,4 +76,5 @@
     }
     };
 </script>
+
 {% endblock content %}

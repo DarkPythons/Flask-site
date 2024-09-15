@@ -44,7 +44,36 @@ def get_authencticate_user():
         flash('Войдите в аккаунт', category='error')
         return redirect('/auth/login')       
 
-@news_router.route('/edit_news/<int:news_num>')
+def update_data_news_function(new_orm: NewsOrm, news_num: int):
+    status_code = 200
+    try:
+        image_orm = ImageOrm()
+        new_anons = request.form['anons']
+        new_title = request.form['title']
+        new_text = request.form['text']
+        photo = request.files['photo']
+        img = None
+        if photo:
+            img = photo.read()
+        new_orm.update_news_in_db(
+            new_anons=new_anons, 
+            new_title=new_title, 
+            new_text=new_text, 
+            number_news=news_num)
+        image_orm.update_photo_by_news_id(new_img=img, number_news=news_num)
+        flash('Изменение новости прошло успешно', category='success_news') 
+    except (KeyError, ValueError, TypeError) as Error:
+        flash('Ошибка при изменении новости, повторите позже', category='error_news')
+        status_code = 500
+    except Exception as Error:
+        flash('Проверьте правильность введеных значений', category='error_news')
+        status_code = 400
+    finally:
+        return status_code
+    
+      
+
+@news_router.route('/edit_news/<int:news_num>', methods=['POST', 'GET'])
 @login_required
 def edit_new_by_num(news_num: int):
     user_id = get_authencticate_user()
@@ -55,7 +84,9 @@ def edit_new_by_num(news_num: int):
         # Если человек и вправду являеется создателем новости
         if data_news['author_id'] == user_id:
             if request.method == 'POST':
-                pass
+                status_update = update_data_news_function(new_orm=new_orm, news_num=news_num)
+                if status_update == 200:
+                    return redirect('/news') 
             return render_template('news_edit.html', title='Редактирование новости', 
                 data_news=data_news)
         else:
