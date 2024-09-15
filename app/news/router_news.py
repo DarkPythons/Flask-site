@@ -24,7 +24,14 @@ def news_page():
     """Функция для отображения первой новостной страницы"""
     new_orm = NewsOrm()
     news_list: list[dict, dict] = new_orm.get_first_news_orm()
-    return render_template('news_page.html', title='Новостная страница', news_data_list=news_list, current_page=1)
+    user_id = current_user.get_id()
+    return render_template(
+        'news_page.html', 
+        title='Новостная страница', 
+        news_data_list=news_list, 
+        current_page=1,
+        user_id_viewer=user_id
+        )
 
 
 @news_router.route('/page/<int:page_num>')
@@ -67,6 +74,9 @@ def add_news_page():
             text = request.form['text']
             photo = request.files['photo']
             user_id = current_user.get_id()
+            if not user_id:
+                flash('Войдите в свой аккаунт для добавления новости', category='error')
+                return redirect('/auth/login')
             img = None
             if photo:
                 img = photo.read()
@@ -74,8 +84,9 @@ def add_news_page():
             image_orm.add_new_photo_news(img=img, f_id_new=news_id_in_db)
             flash('Добавление статьи прошло успешно', category='success_news')
             return redirect(url_for('.news_page'))
-        except:
-            flash('Ошибка добавления статьи в базу, проверьте корректность текста.', category='error')
+        except Exception as Error:
+            flash('Ошибка добавления статьи в базу, проверьте корректность текста.',
+                category='error')
 
     return render_template('add_news_page.html', title='Добавление статьи')
 
