@@ -5,6 +5,9 @@
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center">
         <div class="col col-lg-9 col-xl-8">
+          {% for cat, msg in get_flashed_messages(True) %}
+          <div style='font-size:20px;' class='flash {{ cat }}'>{{ msg }}</div>
+          {% endfor %}
           <div class="card">
             <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
               <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
@@ -13,7 +16,7 @@
                   style="width: 150px; z-index: 1">
 
                 <div class='two-element'>
-                    <a  type="button" data-mdb-button-init data-mdb-ripple-init class="btn  btn-outline-dark text-body" data-mdb-ripple-color="dark" style="z-index: 1; ">
+                    <a  type="button" data-mdb-button-init data-mdb-ripple-init class="btn  btn-outline-dark text-body" data-mdb-ripple-color="dark" href='/auth/edit_profile' style="z-index: 1; ">
                       Редактировать профиль
                     </a>
                 </div>
@@ -39,11 +42,10 @@
             </div>
             <div class="card-body p-4 text-black">
               <div class="mb-5  text-body">
-                <p class="lead fw-normal mb-1">About</p>
+                <p class="lead fw-normal mb-1">О себе</p>
                 <div class="p-4 bg-body-tertiary">
-                  <p class="font-italic mb-1"></p>
-                  <p class="font-italic mb-1"></p>
-                  <p class="font-italic mb-0"></p>
+                  <p class="font-italic mb-1">{{ date.about }}</p>
+
                 </div>
               </div>
           </div>

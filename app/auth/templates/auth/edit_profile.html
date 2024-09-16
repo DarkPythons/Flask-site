@@ -1,0 +1,58 @@
+{% extends 'auth/base_auth.html' %}
+
+{% block content %}
+
+
+<div class='auth-edit-text'>
+    <div class='centering-form'>
+    <div class='container'>
+    
+    <form class="needs-validation" method='post' action='' enctype="multipart/form-data">
+        <div class="row g-3" bis_skin_checked="1">
+            <div class='center-div'>
+          <div class="col-10" bis_skin_checked="1">
+
+            
+          </div>
+        </div>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+            {% for cat, msg in get_flashed_messages(True) %}
+            <div class='flash {{ cat }}'>{{ msg }}</div>
+            {% endfor %}
+        <div class='center-div'>
+            <div class="col-10" bis_skin_checked="1">
+              <label for="NameNews" class="form-label">Имя пользователя</label>
+              <input type="text" class="form-control" id="NameNews" value={{ user_data.username }}  name="username" required>
+              <div class="invalid-feedback" bis_skin_checked="1">
+                Введите корректный заголовок.
+              </div>
+            </div>
+        </div>
+          <div class="col-12" bis_skin_checked="1">
+            <label for="username" class="form-label">О себе</label>
+            <div class="has-validation" bis_skin_checked="1">
+              <textarea type="Text" class="form-control" id="Text" required="" row="40" 
+              cols="100" name='about'>{% if user_data.about %}{{ user_data.about }}{% else %}{% endif %}
+            </textarea>
+            <div class="invalid-feedback" bis_skin_checked="1">
+                Ваш текст не прошёл проверку.
+              </div>
+            </div>
+          </div>
+
+
+          </div>
+    
+        <hr class="my-4">
+    
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Применить изменения</button>
+        <p></p>
+        <a href='/auth/profile' class="w-100 btn btn-secondary btn-lg" type="button">Отменить изменения</a>
+      </form>
+    </div>
+    </div>
+    </div>
+{% endblock content %}

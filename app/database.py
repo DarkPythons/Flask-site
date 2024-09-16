@@ -14,9 +14,11 @@ class Users(db.Model):
     email: Mapped[str] = mapped_column(db.String(50), unique=True, nullable=False)
     psw: Mapped[str] = mapped_column(db.String(500), nullable=False)
     date: Mapped[str] = mapped_column(db.DateTime, default=datetime.datetime.utcnow)
+    about: Mapped[str] = mapped_column(db.String(1000), nullable=True)
 
     def __repr__(self):
         return f"<users {self.id}>"
+
 
 
 class News(db.Model):

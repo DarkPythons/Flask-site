@@ -130,3 +130,35 @@ def profile():
     except TypeError as Error:
         return redirect(url_for('.logout'))
     return render_template('auth/profile.html', title='Профиль', date=date)
+
+def edit_profile_funtion(orm: AuthOrm, user_info: dict):
+    
+    status_code = 200
+    try:
+        new_username = request.form['username']
+        new_about = request.form['about']
+        orm.update_data_user(new_username=new_username, new_about=new_about, user_id=user_info['id'])
+        flash('Изменение данных аккаунта прошло успешно', category='success')   
+    except Exception as Error:
+        flash('Ошибка при изменении данных аккаунта, проверьте данные', category='error')
+        status_code = 400
+    finally:
+        return status_code 
+        
+@auth_router.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    """
+    Получение страницы для редактирования своего профиля
+    и обработка отправленной формы новых данных для профиля.
+    """
+    orm = AuthOrm()
+    user_email = current_user.get_email()
+    user_info = orm.get_user_by_email(user_email)
+    if request.method == 'POST':
+        status_update = edit_profile_funtion(orm, user_info)
+        if status_update == 200:
+            return redirect(url_for('.profile'))
+        else:
+            pass
+    return render_template('auth/edit_profile.html', title='Редактирование профиля', user_data=user_info)

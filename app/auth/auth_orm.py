@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import select
+from sqlalchemy import select, update
 
 
 
@@ -21,9 +21,9 @@ class AuthOrm:
     def get_user_by_email(self, email_user):
         query = select(self.Users.id, 
             self.Users.email, 
-            self.Users.psw, 
             self.Users.date, 
-            self.Users.username).where(self.Users.email == email_user).limit(1)
+            self.Users.username,
+            self.Users.about).where(self.Users.email == email_user).limit(1)
         result = self.session.execute(query)
         if result:
             list_result:list = result.mappings().all()
@@ -38,3 +38,8 @@ class AuthOrm:
 
     def get_rollback(self):
         self.session.rollback()
+
+    def update_data_user(self, *, new_username, new_about, user_id):
+        query = update(self.Users).values(username=new_username, about=new_about).where(self.Users.id == user_id)
+        self.session.execute(query)
+        self.session.commit()

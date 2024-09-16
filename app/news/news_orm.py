@@ -35,6 +35,7 @@ class NewsOrm:
             self.News.id, self.News.title, self.News.text, 
             self.News.views, self.News.author_id, self.News.anons
             # Делаем отсуп + ограничение количества новостей
+            ).order_by(self.News.id.desc()
             ).offset(offset_param).limit(self.num_of_news_on_one_page)
         result = self.session.execute(query)
         return result.mappings().all()

@@ -17,6 +17,7 @@ def creating_dict_for_profile(user_orm):
     date = {
         "username" : user_orm['username'],
         "email" : user_orm['email'],
-        "date" : user_orm['date']
+        "date" : user_orm['date'],
+        "about" : user_orm['about']
     }
     return date
