@@ -23,7 +23,8 @@ class AuthOrm:
             self.Users.email, 
             self.Users.date, 
             self.Users.username,
-            self.Users.about).where(self.Users.email == email_user).limit(1)
+            self.Users.about,
+            self.Users.psw).where(self.Users.email == email_user).limit(1)
         result = self.session.execute(query)
         if result:
             list_result:list = result.mappings().all()

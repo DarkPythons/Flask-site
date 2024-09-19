@@ -25,13 +25,15 @@ def news_page():
     new_orm = NewsOrm()
     news_list: list[dict, dict] = new_orm.get_first_news_orm()
     user_id: str = current_user.get_id()
+    if user_id:
+        user_id: int = int(user_id)
     return render_template(
         'news_page.html', 
         title='Новостная страница', 
         news_data_list=news_list, 
         current_page=1,
         # Для правильного сравнения на сайте нужен тип строки
-        user_id_viewer=int(user_id)
+        user_id_viewer=user_id
         )
 
 def get_authencticate_user():
