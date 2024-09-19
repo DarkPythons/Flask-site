@@ -34,6 +34,18 @@ class News(db.Model):
     def __repr__(self):
         return f"<new {self.id}>"
     
+class Notes(db.Model):
+    id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
+    name_notes: Mapped[str] = mapped_column(db.String(50), nullable=False)
+    text_notes: Mapped[str] = mapped_column(db.String(2000), nullable=False)
+
+    author_id: Mapped[int] = mapped_column(ForeignKey(Users.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+
+    def __repr__(self):
+        return f"<note {self.id}>"
+    
+
+
 class News_Image(db.Model):
     id: Mapped[int] = mapped_column(db.Integer, primary_key=True)
     photo : Mapped[bin] = mapped_column(db.LargeBinary, nullable=True)
