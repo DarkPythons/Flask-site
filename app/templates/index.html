@@ -11,7 +11,7 @@
 
   <div class="px-4 py-5 my-5 text-center">
     <img class="d-block mx-auto mb-4 border rounded-3" src="static/image/photo_index.png" alt="site photo" width="90" height="100">
-    <h1 class="display-5 fw-bold text-body-emphasis">Добрый день!</h1>
+    <h1 class="display-5 fw-bold text-body-emphasis">Dark Pythons</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">Сайт включает в себя множество разных функций, 
       исходный код всего проекта есть на GitHub, можете перейти по кнопкам ниже.</p>
@@ -29,11 +29,12 @@
   <div class="px-4 pt-5 my-5 text-center border-bottom">
     <h1 class="display-4 fw-bold text-body-emphasis">Что умеет сайт?</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Быстро пробежимся по функциям, на сайте вы можете оставлять ваши заметки,
-      писать новости и выкладывать разные статьи.
+      <p class="lead mb-4">Быстро пробежимся по функциям, на сайте вы можете писать свои новости, их будут видеть другие пользователи, смотреть на стоимость валюты и оставлять свои заметки.
       </p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-        <a type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Читать больше</a>
+        <a href='/news' type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Новости</a>
+        <a href='/convert' type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Валюта</a>
+        <a href='/notes' type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Заметки</a>
         <a href='/about' type="button" class="btn btn-outline-secondary btn-lg px-4">О нас</a>
       </div>
     </div>
@@ -53,14 +54,14 @@
       </div>
       <div class="col-lg-6">
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Краткое предисловие.</h1>
-        <p class="lead">Данный сайт написан в образовательных целях, дабы закрепить тему Flask, 
+        <p class="lead">Данный сайт написан на python с использованием Flask фреймворка, 
         вы можете 
         <a href='https://github.com/DarkPythons/Flask-site'>скачать</a> 
         его и изменить как вам угодно, 
         проект распространяется под свободной лицензией MIT.</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">кнопка</button>
-          <button type="button" class="btn btn-outline-secondary btn-lg px-4">кнопка</button>
+          <a href='/auth/login' type="button" class="btn btn-primary btn-lg px-4 me-md-2">Войти</a>
+          <a href='https://mit-license.org/' type="button" class="btn btn-outline-secondary btn-lg px-4">Лицензия</a>
         </div>
       </div>
     </div>
@@ -72,21 +73,7 @@
 
   <div class="b-example-divider"></div>
 
-  <div class="container my-5">
-    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Оцените качество проекта и дизайна по достоинству!</h1>
-        <p class="lead">Сайт написан без какого-либо JavaScript, но автор постарался сделать конвертер валюты и без этого, получилось хорошо, поробуйте по кнопке ниже:</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-          <a href='/convert' type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Конвертер</a>
-          <a href='#' type="button" class="btn btn-outline-secondary btn-lg px-4">Base</a>
-        </div>
-      </div>
-      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-          <img class="rounded-lg-3" src="bootstrap-docs.png" alt="" width="720">
-      </div>
-    </div>
-  </div>
+
   <div class="b-example-divider"></div>
   <div class="b-example-divider mb-0"></div>
 </main>

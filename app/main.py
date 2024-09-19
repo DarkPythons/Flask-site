@@ -7,6 +7,7 @@ from auth.router_auth import auth_router
 from error_handlers import error_router
 from converter.router_converter import converter_router
 from news.router_news import news_router
+from notes.router_notes import notes_router
 
 db_setting = BaseSettingsDataBase()
 
@@ -40,6 +41,7 @@ app.register_blueprint(auth_router, url_prefix='/auth')
 app.register_blueprint(error_router)
 app.register_blueprint(converter_router, url_prefix="/convert")
 app.register_blueprint(news_router, url_prefix='/news')
+app.register_blueprint(notes_router, url_prefix='/notes')
 
 if __name__ == "__main__":
     from database import db
