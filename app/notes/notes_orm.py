@@ -6,14 +6,25 @@ class NotesOrm:
         self.db = db
         self.session = db.session
         self.Notes = Notes
+
+    def get_note_info_by_id(self, id_note):
+        query = select(self.Notes.id, self.Notes.name_notes, self.Notes.text_notes, self.Notes.author_id).where(self.Notes.id == id_note)
+        result = self.session.execute(query)
+        return result.mappings().one()
     
     def get_notes_by_limit(self, *, limit_notes: int = 15, author_id: int) -> list[dict, dict]:
-        query = select(self.Notes.id, self.Notes.name_notes, self.Notes.text_notes, self.Notes.author_id).where(self.Notes.author_id == author_id).limit(limit_notes)
+        query = select(
+            self.Notes.id, self.Notes.name_notes, self.Notes.text_notes, 
+            self.Notes.author_id).where(
+                self.Notes.author_id == author_id
+            ).limit(limit_notes).order_by(self.Notes.id.desc())
         result = self.session.execute(query)
         return result.mappings().all()
 
     def add_new_notes(self, *, name_notes, text_notes, author_id):
-        query = insert(self.Notes).values(name_notes=name_notes, text_notes=text_notes, author_id=author_id)
+        query = insert(self.Notes).values(
+            name_notes=name_notes, text_notes=text_notes, author_id=author_id
+        )
         self.session.execute(query)
         self.session.commit()
 
@@ -23,7 +34,9 @@ class NotesOrm:
         self.session.commit()
 
     def check_note_and_author(self, id_note, user_id) -> bool:
-        query = select(self.Notes).where((self.Notes.id == id_note) & (self.Notes.author_id == user_id))
+        query = select(self.Notes).where(
+            (self.Notes.id == id_note) & (self.Notes.author_id == user_id)
+        )
         result = self.session.execute(query)
         if result:
             if result.all():

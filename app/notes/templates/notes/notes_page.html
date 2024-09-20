@@ -30,9 +30,9 @@
             <h3 class="display-6 fw-bold">{{ one_notes.name_notes }}</h3>
             <ul class="d-flex list-unstyled mt-auto nav nav-pills button-padding-left">
 
-                <li class="nav-item padding-item-bar"><a href="/notes/" class="btn btn-info px-5" aria-current="page ">Описание</a></li>
+                <li class="nav-item padding-item-bar"><a href="/notes/view_note/{{ one_notes.id }}" class="btn btn-info px-5" aria-current="page ">Описание</a></li>
 
-                <li class="nav-item padding-item-bar"><a href="/notes/" class="btn btn-warning px-5" aria-current="page ">Изменить</a></li>
+                <li class="nav-item padding-item-bar"><a href="/notes/update_note/{{ one_notes.id }}" class="btn btn-warning px-5" aria-current="page ">Изменить</a></li>
 
                 <li class="nav-item padding-item-bar"><a href="/notes/delete_note/{{ one_notes.id }}" class="btn btn-danger px-5 " aria-current="page ">Удалить</a></li>
               </li>

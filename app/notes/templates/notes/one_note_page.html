@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style='padding-top:20px;' class='center-text'>
+    <div class="cover-container text-bg-dark">
+        <main class="px-3">
+
+            <div class=''>
+                <img src='/static/image/fon.png' class="bd-placeholder-img d-block mx-auto border rounded-3" width="500px" height="500px">
+            </div>
+
+            <div class='notes-title '>
+                <p class='text-size-big'>{{ note_data.name_notes }}</p>
+            </div>
+
+            <div class='notes-text'>
+                <p class='text-size-medium'>{{ note_data.text_notes }}</p>
+
+            </div>
+
+            <div class='footer-news'>
+
+                <ul class=" mt-auto nav nav-pills">
+
+                    <li class="nav-item padding-item-bar"><a href="/notes/" class="btn btn-info px-5" aria-current="page">Все заметки</a></li>
+    
+                    <li class="nav-item padding-item-bar"><a href="/notes/update_note/{{ note_data.id }}" class="btn btn-warning px-5" aria-current="page">Изменить</a></li>
+    
+                    <li class="nav-item padding-item-bar"><a href="/notes/delete_note/{{ note_data.id }}" class="btn btn-danger px-5 " aria-current="page ">Удалить</a></li>
+                  </li>
+                </ul>
+            </div>
+
+
+
+        </main>
+      </div>
+    </div>
+
+
+{% endblock content %}

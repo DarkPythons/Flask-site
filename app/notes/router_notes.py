@@ -53,3 +53,21 @@ def delete_note_page(id_note: int):
     else:
         flash('Вы не являетесь автором этой заметки', category='error_notes')
     return redirect('/notes/')
+
+@notes_router.route('/update_note/<int:id_note>')
+@login_required
+def update_note_page(id_note: int):
+    return f'Обновление {id_note}'
+
+@notes_router.route('/view_note/<int:id_note>')
+@login_required
+def page_one_note(id_note: int):
+    note_orm = NotesOrm()
+    user_id: int = current_user.get_id()
+    status_author: bool = note_orm.check_note_and_author(id_note, user_id)
+    if status_author:
+        note_by_id_requests = note_orm.get_note_info_by_id(id_note)
+        return render_template('one_note_page.html', title='Заметка', note_data= note_by_id_requests)
+    else:
+        flash('Вы не являетесь автором этой заметки', category='error_notes')
+        return redirect('/notes/')

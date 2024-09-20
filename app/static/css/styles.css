@@ -3,6 +3,19 @@
     padding-bottom: 20%;
 }
 
+.content-center {
+    top: 30%;
+    padding-top: 15%;
+    justify-content:space-between
+}
+
+.text-size-big {
+    font-size: 70px;
+}
+
+.text-size-medium {
+    font-size: 30px;
+}
 
 .center-text {
     text-align: center;
@@ -110,6 +123,19 @@
     font-size: 200%;
 }
 .news-text {
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: justify;
+    font-size: 150%;
+    padding-bottom: 1%;
+}
+
+.notes-title {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: 200%;
+}
+.notes-text {
     padding-left: 10%;
     padding-right: 10%;
     text-align: justify;
