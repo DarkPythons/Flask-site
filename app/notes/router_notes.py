@@ -7,7 +7,11 @@ notes_router = Blueprint('notes_router', __name__, static_folder='static', templ
 @notes_router.route('/')
 @login_required
 def pages_notes():
-    return render_template('notes_page.html', title='Заметки')
+    note_orm = NotesOrm()
+    COUNT_RETURNS_NOTES = 15
+    user_id = current_user.get_id()
+    notes_list = note_orm.get_notes_by_limit(limit_notes=COUNT_RETURNS_NOTES, author_id=user_id)
+    return render_template('notes_page.html', title='Заметки', notes_data_list=notes_list)
 
 def add_new_notes_function(note_orm: NotesOrm):
     status_code = 200
@@ -22,9 +26,6 @@ def add_new_notes_function(note_orm: NotesOrm):
         return status_code
 
 
-
-
-
 @notes_router.route('/add_note', methods = ['POST', 'GET'])
 @login_required
 def add_note_page():
@@ -35,7 +36,8 @@ def add_note_page():
             flash('Добавление заметки прошло успешно', category='success_notes')
             return redirect('/notes/')
         else:
-            flash('Проверьте корректность данных заметки, запись не удалась', category='error_notes')
+            flash('Проверьте корректность данных заметки, запись не удалась',
+                category='error_notes')
 
     return render_template('notes_add.html', title='Добавление заметки')
 
@@ -47,7 +49,7 @@ def delete_note_page(id_note: int):
     status_author: bool = note_orm.check_note_and_author(id_note, user_id)
     if status_author:
         note_orm.delete_note_from_db(id_note)
-        pass
+        flash('Заметка была успешно удалена', category="success_notes")
     else:
-        # Если пользователь пытался удалить заметку которой нет или которая не принадлежит ему
-        pass
+        flash('Вы не являетесь автором этой заметки', category='error_notes')
+    return redirect('/notes/')

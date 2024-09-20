@@ -181,3 +181,13 @@
     border: 1px solid #5d1414;
     background: rgb(80, 43, 43);   
 }
+
+
+.height-card {
+    padding-bottom: 150px;
+}
+
+.button-padding-left {
+    padding-top: 50%;
+}
+

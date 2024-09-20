@@ -14,35 +14,39 @@
     <div class='flash {{ cat }}'>{{ msg }}</div>
     {% endfor %}
 
-    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5" bis_skin_checked="1">
+    
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-1" bis_skin_checked="1">
+      {% for one_notes in notes_data_list %}
       <div class="col" bis_skin_checked="1">
-        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/static/image/fon.png'); 
+        
+        <div class="height-card card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="padding-bottom:0px; background-image: url('/static/image/fon.png'); 
         no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;" 
         bis_skin_checked="1">
-          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1" bis_skin_checked="1">
-            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Short title, long jacket</h3>
-            <ul class="d-flex list-unstyled mt-auto">
-              <li class="me-auto">
-                <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">
-              </li>
-              <li class="d-flex align-items-center me-3">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"></use></svg>
-                <small>Earth</small>
-              </li>
-              <li class="d-flex align-items-center">
-                <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"></use></svg>
-                <small>3d</small>
+          <div class="d-flex flex-column p-5 h-100 text-white text-shadow-1" bis_skin_checked="1">
+            <h3 class="display-6 fw-bold">{{ one_notes.name_notes }}</h3>
+            <ul class="d-flex list-unstyled mt-auto nav nav-pills button-padding-left">
+
+                <li class="nav-item padding-item-bar"><a href="/notes/" class="btn btn-info px-5" aria-current="page ">Описание</a></li>
+
+                <li class="nav-item padding-item-bar"><a href="/notes/" class="btn btn-warning px-5" aria-current="page ">Изменить</a></li>
+
+                <li class="nav-item padding-item-bar"><a href="/notes/delete_note/{{ one_notes.id }}" class="btn btn-danger px-5 " aria-current="page ">Удалить</a></li>
               </li>
             </ul>
           </div>
+          
         </div>
+         
       </div>
+     {% endfor %}
 
       </div>
+      
     </div>
+    
   </div>
 {% endblock content %}
