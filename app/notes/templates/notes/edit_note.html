@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='news-page-text'>
+    <div class='centering-form full-center'>
+    <div class='container'>
+    
+    <form class="needs-validation" method='post' action='' enctype="multipart/form-data">
+        <div class="row g-3" bis_skin_checked="1">
+            <div class='center-div'>
+          <div class="col-10" bis_skin_checked="1">
+              {% for cat, msg in get_flashed_messages(True) %}
+              <div class='flash {{ cat }}'>{{ msg }}</div>
+              {% endfor %}
+            <label for="NameNotes" class="form-label">Новое название заметки</label>
+            <input type="text" class="form-control" id="NameNotes"  name="name_notes" required value={{ note_data.name_notes }}>
+            <div class="invalid-feedback" bis_skin_checked="1">
+              Введите корректный заголовок.
+            </div>
+          </div>
+        </div>
+    
+
+          <div class="col-12" bis_skin_checked="1">
+            <label for="TextNotes" class="form-label">Новый текст заметки</label>
+            <div class="has-validation" bis_skin_checked="1">
+              <textarea type="Text" class="form-control" id="TextNotes" required="" row="40" 
+              cols="100" name='text_notes'>{{ note_data.text_notes }}</textarea>
+            <div class="invalid-feedback" bis_skin_checked="1">
+            Ваш текст не прошёл проверку.
+              </div>
+            </div>
+          </div>
+    
+
+    
+        <hr class="my-4">    
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Загрузить обновление</button>
+        <a type='button' href='/notes/' class="w-100 btn btn-secondary btn-lg">Отменить обновления</a>
+      </form>
+    </div>
+    </div>
+    </div>
+
+{% endblock content %}

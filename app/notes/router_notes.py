@@ -10,8 +10,11 @@ def pages_notes():
     note_orm = NotesOrm()
     COUNT_RETURNS_NOTES = 15
     user_id = current_user.get_id()
-    notes_list = note_orm.get_notes_by_limit(limit_notes=COUNT_RETURNS_NOTES, author_id=user_id)
-    return render_template('notes_page.html', title='Заметки', notes_data_list=notes_list)
+    if user_id:
+        notes_list = note_orm.get_notes_by_limit(limit_notes=COUNT_RETURNS_NOTES, author_id=user_id)
+        return render_template('notes_page.html', title='Заметки', notes_data_list=notes_list)
+    else:
+        return redirect('/auth/login/')
 
 def add_new_notes_function(note_orm: NotesOrm):
     status_code = 200
@@ -54,10 +57,24 @@ def delete_note_page(id_note: int):
         flash('Вы не являетесь автором этой заметки', category='error_notes')
     return redirect('/notes/')
 
-@notes_router.route('/update_note/<int:id_note>')
+@notes_router.route('/update_note/<int:id_note>', methods=['POST', 'GET'])
 @login_required
 def update_note_page(id_note: int):
-    return f'Обновление {id_note}'
+    note_orm = NotesOrm()
+    user_id: int = current_user.get_id()
+    status_author: bool = note_orm.check_note_and_author(id_note, user_id)
+    if status_author:
+        if request.method == 'POST':
+            new_name = request.form['name_notes']
+            new_text = request.form['text_notes']
+            note_orm.update_info_note(new_name=new_name, new_text=new_text, id_note=id_note)
+            flash('Изменения были применены', category='success_notes')
+            return redirect('/notes/')
+        note_info = note_orm.get_note_info_by_id(id_note)
+        return render_template('edit_note.html', title='Обновление заметки', note_data=note_info)
+    else:
+        flash('Вы не являетесь автором этой заметки', category='error_notes')
+        return redirect('/notes/')
 
 @notes_router.route('/view_note/<int:id_note>')
 @login_required
@@ -66,8 +83,8 @@ def page_one_note(id_note: int):
     user_id: int = current_user.get_id()
     status_author: bool = note_orm.check_note_and_author(id_note, user_id)
     if status_author:
-        note_by_id_requests = note_orm.get_note_info_by_id(id_note)
-        return render_template('one_note_page.html', title='Заметка', note_data= note_by_id_requests)
+        note_info = note_orm.get_note_info_by_id(id_note)
+        return render_template('one_note_page.html', title='Заметка', note_data= note_info)
     else:
         flash('Вы не являетесь автором этой заметки', category='error_notes')
         return redirect('/notes/')
