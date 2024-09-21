@@ -16,6 +16,8 @@ def pages_notes():
     else:
         return redirect('/auth/login/')
 
+
+
 def add_new_notes_function(note_orm: NotesOrm):
     status_code = 200
     try:
@@ -41,7 +43,6 @@ def add_note_page():
         else:
             flash('Проверьте корректность данных заметки, запись не удалась',
                 category='error_notes')
-
     return render_template('notes_add.html', title='Добавление заметки')
 
 @notes_router.route('/delete_note/<int:id_note>')
@@ -57,6 +58,25 @@ def delete_note_page(id_note: int):
         flash('Вы не являетесь автором этой заметки', category='error_notes')
     return redirect('/notes/')
 
+def update_note_function(note_orm: NotesOrm, id_note: int):
+    status = 200
+    try:
+        new_name = request.form['name_notes']
+        new_text = request.form['text_notes']
+        note_orm.update_info_note(new_name=new_name, new_text=new_text, id_note=id_note)
+        flash('Изменения были применены', category='success_notes')
+    except (KeyError, ValueError, TypeError) as Error:
+        flash('Ошибка заполнения формы обновления заметки', category='error_notes')
+        status = 400
+    except Exception as Error:
+        flash('Ошибка обновления заметки', category='error_notes')
+        status = 500
+    finally:
+        return status
+        
+
+
+
 @notes_router.route('/update_note/<int:id_note>', methods=['POST', 'GET'])
 @login_required
 def update_note_page(id_note: int):
@@ -65,11 +85,12 @@ def update_note_page(id_note: int):
     status_author: bool = note_orm.check_note_and_author(id_note, user_id)
     if status_author:
         if request.method == 'POST':
-            new_name = request.form['name_notes']
-            new_text = request.form['text_notes']
-            note_orm.update_info_note(new_name=new_name, new_text=new_text, id_note=id_note)
-            flash('Изменения были применены', category='success_notes')
-            return redirect('/notes/')
+            status_update = update_note_function(note_orm, id_note)
+            if status_update == 200:
+                return redirect('/notes/')
+            else:
+                return redirect(f'/notes/update_note/{id_note}')
+
         note_info = note_orm.get_note_info_by_id(id_note)
         return render_template('edit_note.html', title='Обновление заметки', note_data=note_info)
     else:
