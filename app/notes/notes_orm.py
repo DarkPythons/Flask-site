@@ -41,7 +41,7 @@ class NotesOrm:
         result = self.session.execute(query)
         return result.mappings().all()
 
-    def add_new_notes(self, *, name_notes, text_notes, author_id):
+    def add_new_notes(self, *, name_notes: str, text_notes: str, author_id: int):
         """Добавление новой заметки в таблицу заметок
         name_notes: название заметки
         text_notes: текст заметки
@@ -63,7 +63,7 @@ class NotesOrm:
         self.session.execute(query)
         self.session.commit()
 
-    def check_note_and_author(self, id_note, user_id) -> bool:
+    def check_note_and_author(self, id_note: int, user_id: int) -> bool:
         """
         Функция для проверки, является ли заметка с определенным id пользователя который сделал
         запрос на её обновление/удаление/просмотр.
