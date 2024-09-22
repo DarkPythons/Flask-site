@@ -75,16 +75,18 @@ def pages_scrolling(page_num: int):
 
 
 @news_router.route('/image_news/<int:news_id>')
-@login_required
 def get_image_by_news_id(news_id: int):
     image_orm = ImageOrm()
-    photo = image_orm.get_photo_from_db(f_id_new=news_id)
-    if not photo:
-        with open('static/image/photo_index.png', 'rb') as photo_file:
-            photo = photo_file.read()
-    response = make_response(photo)
-    response.headers['Content-Type'] = 'image/jpg'
-    return response
+    try:
+        photo = image_orm.get_photo_from_db(f_id_new=news_id)
+        if not photo:
+            with open('static/image/photo_index.png', 'rb') as photo_file:
+                photo = photo_file.read()
+        response = make_response(photo)
+        response.headers['Content-Type'] = 'image/jpg'
+        return response
+    except (FileNotFoundError):
+        return 'Ошибка получения фотографии'
 
 
 @news_router.route('/add_news', methods=['POST', 'GET'])
