@@ -1,11 +1,18 @@
+"""
+Модуль, который содержит обработчики запросов для входа/регистрации/обновления данных профиля
+login: Получение формы для входа в профиль и её обработка
+register: Получение формы для регистрации и её обработка
+logout: Сделать выход из своего аккаунта
+profile: Получить свой профиль
+edit_profile: Получение формы для изменения своего профиля и обработка этой формы
+"""
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session
-from flask_login import current_user, login_user, login_required, logout_user
+from flask_login import current_user, login_required, logout_user
 
 from .auth_orm import AuthOrm
-from .UserLogin import UserLogin
-from .utils import data_validate, creating_dict_for_profile
-
-
+from .utils import (data_validate, creating_dict_for_profile, function_by_login, 
+    function_by_register, edit_profile_funtion
+    )
 
 auth_router = Blueprint('router_auth', 
     __name__, 
@@ -13,51 +20,6 @@ auth_router = Blueprint('router_auth',
     template_folder='templates'
     )
 
-
-
-def create_user_session(*, user):
-    """Фукнция для создания сессии пользователю по данным из бд 
-    (используется при регистрации, входа в аккаунт)
-    """
-    userLogin = UserLogin().create(user)
-    rm = True if request.form.get('remainme') else False
-    login_user(userLogin, remember=rm)
-    return 200
-
-
-def function_by_login():
-    """Функция для обработки данных и создания сессии, когда пользователь выполнял аунтефикацию"""
-    orm = AuthOrm()
-    user_from_orm = orm.get_user_by_email(request.form['email'])
-    if user_from_orm:
-        password_valid = orm.validate_password_user(user_from_orm['psw'], request.form['psw'])
-        if password_valid:
-            result = create_user_session(user=user_from_orm)
-            return result
-        else:
-            flash('Неверная пара email/пароль', category='error')
-    else:
-        flash('Неверная пара email/пароль', category='error')
-
-def function_by_register():
-    """Функция для обработки данных и создания сессии, когда пользователь выполнял 
-    регистрацию аккаунта
-    """
-    orm = AuthOrm()
-    try:
-        user = orm.get_user_by_email(request.form['email'])
-        if not user:
-            orm.register_user(request.form['username'], request.form['email'], request.form['psw'])
-            #Получение пользователя из базы по его email и создание 
-            user_from_orm = orm.get_user_by_email(request.form['email'])
-            result = create_user_session(user=user_from_orm)
-            return result
-        else:
-            flash('Пользователь с таким email уже есть.', category='error')
-    except Exception as error:
-        #Откат базы данных в случае ошибки
-        orm.get_rollback()
-        flash('Ошибка на стороне базы данных', category='error')
 
 @auth_router.route('/login', methods=['POST', 'GET'])
 def login():
@@ -131,20 +93,6 @@ def profile():
         return redirect(url_for('.logout'))
     return render_template('auth/profile.html', title='Профиль', date=date)
 
-def edit_profile_funtion(orm: AuthOrm, user_info: dict):
-    
-    status_code = 200
-    try:
-        new_username = request.form['username']
-        new_about = request.form['about']
-        orm.update_data_user(new_username=new_username, new_about=new_about, user_id=user_info['id'])
-        flash('Изменение данных аккаунта прошло успешно', category='success')   
-    except Exception as Error:
-        flash('Ошибка при изменении данных аккаунта, проверьте данные', category='error')
-        status_code = 400
-    finally:
-        return status_code 
-        
 @auth_router.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
