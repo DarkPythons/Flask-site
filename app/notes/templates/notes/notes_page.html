@@ -46,8 +46,39 @@
       </div>
      {% endfor %}
 
+
+
       </div>
-      
+    {% if notes_data_list %}
+    <div class='text-center container padding_item'>
+      <div class='paggination-bar padding-top-bar'>
+       <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page_id != 1 %}
+          <li class="page-item"><a class="page-link" href="/notes/page/{{ page_id-1 }}">Предыдущая</a></li>
+          {% endif %}
+          <li class="page-item "><a class="page-link" href="/notes/page/{{ page_id+1 }}">Следующая</a></li>
+        </ul>
+      </nav>
+    </div> 
+
+    {% else %}
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <div class='text-center container padding_item'>
+      <div class='paggination-bar padding-top-bar'>
+       <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if page_id != 1 %}
+          <li class="page-item"><a class="page-link" href="/notes/page/{{ page_id-1 }}">Предыдущая</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div> 
+
+    {% endif %}
     </div>
     
   </div>

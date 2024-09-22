@@ -6,18 +6,19 @@ class NotesOrm:
         self.db = db
         self.session = db.session
         self.Notes = Notes
+        self.ONE_PAGE_LIMIT_NOTES = 15
 
     def get_note_info_by_id(self, id_note):
         query = select(self.Notes.id, self.Notes.name_notes, self.Notes.text_notes, self.Notes.author_id).where(self.Notes.id == id_note)
         result = self.session.execute(query)
         return result.mappings().one()
     
-    def get_notes_by_limit(self, *, limit_notes: int = 15, author_id: int) -> list[dict, dict]:
+    def get_notes_by_limit(self, *, author_id: int) -> list[dict, dict]:
         query = select(
             self.Notes.id, self.Notes.name_notes, self.Notes.text_notes, 
             self.Notes.author_id).where(
                 self.Notes.author_id == author_id
-            ).limit(limit_notes).order_by(self.Notes.id.desc())
+            ).limit(self.ONE_PAGE_LIMIT_NOTES).order_by(self.Notes.id.desc())
         result = self.session.execute(query)
         return result.mappings().all()
 
@@ -52,3 +53,10 @@ class NotesOrm:
         query = update(self.Notes).values(name_notes=new_name, text_notes=new_text).where(self.Notes.id == id_note)
         self.session.execute(query)
         self.session.commit()
+
+    def get_notes_by_page(self, *, author_id: int, page_id: int) -> list:
+        # Высчитываем сколько записей мы должны пропустить
+        offset_param = (page_id-1) * self.ONE_PAGE_LIMIT_NOTES
+        query = select(self.Notes.id, self.Notes.name_notes, self.Notes.text_notes, self.Notes.author_id).where(self.Notes.author_id == author_id).offset(offset_param).limit(self.ONE_PAGE_LIMIT_NOTES).order_by(self.Notes.id.desc())
+        result = self.session.execute(query)
+        return result.mappings().all()

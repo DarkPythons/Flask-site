@@ -9,14 +9,23 @@ notes_router = Blueprint('notes_router', __name__, static_folder='static', templ
 @login_required
 def pages_notes():
     note_orm = NotesOrm()
-    COUNT_RETURNS_NOTES = 15
     user_id = current_user.get_id()
     if user_id:
-        notes_list = note_orm.get_notes_by_limit(limit_notes=COUNT_RETURNS_NOTES, author_id=user_id)
-        return render_template('notes_page.html', title='Заметки', notes_data_list=notes_list)
+        notes_list = note_orm.get_notes_by_limit(author_id=user_id)
+        return render_template('notes_page.html', title='Заметки', notes_data_list=notes_list, page_id=1)
     else:
-        return redirect('/auth/login/')
+        return redirect('/auth/login')
 
+@notes_router.route('/page/<int:page_id>')
+@login_required
+def pages_notes_pagination(page_id: int):
+    note_orm = NotesOrm()
+    user_id = current_user.get_id()
+    if user_id:
+        notes_list_data: list = note_orm.get_notes_by_page(author_id=user_id, page_id=page_id)
+        return render_template('notes_page.html', title=f'Заметки, страница {page_id}', notes_data_list=notes_list_data, page_id=page_id)
+    else:
+        return redirect('/auth/login')
 
 
 @notes_router.route('/add_note', methods = ['POST', 'GET'])
