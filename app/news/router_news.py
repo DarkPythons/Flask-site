@@ -7,12 +7,12 @@ get_image_by_news_id(news_id) - Получение определенной фо
     если такой фотографии в базе нет, берется фотография по умолчанию
 add_news_page - Форма (и её обработка) для добавления новости в общую ленту
 view_news_page(number_news) - Получение страницы конкретной новости по её айди 
-
 """
 from flask import Blueprint, render_template, request, redirect, url_for, make_response,flash
 from flask_login import login_required, current_user
 
 from .news_orm import NewsOrm, ImageOrm
+from .utils import update_data_news_function, get_authencticate_user 
 
 news_router = Blueprint('news_router', __name__,
     static_folder='static',
@@ -32,48 +32,10 @@ def news_page():
         title='Новостная страница', 
         news_data_list=news_list, 
         current_page=1,
-        # Для правильного сравнения на сайте нужен тип строки
         user_id_viewer=user_id
         )
 
-def get_authencticate_user():
-    user_id = current_user.get_id()
-    if user_id:
-        user_id = int(user_id)
-        return user_id
-
-    else:
-        flash('Войдите в аккаунт', category='error')
-        return redirect('/auth/login')       
-
-def update_data_news_function(new_orm: NewsOrm, news_num: int):
-    status_code = 200
-    try:
-        image_orm = ImageOrm()
-        new_anons = request.form['anons']
-        new_title = request.form['title']
-        new_text = request.form['text']
-        photo = request.files['photo']
-        img = None
-        if photo:
-            img = photo.read()
-        new_orm.update_news_in_db(
-            new_anons=new_anons, 
-            new_title=new_title, 
-            new_text=new_text, 
-            number_news=news_num)
-        image_orm.update_photo_by_news_id(new_img=img, number_news=news_num)
-        flash('Изменение новости прошло успешно', category='success_news') 
-    except (KeyError, ValueError, TypeError) as Error:
-        flash('Ошибка при изменении новости, повторите позже', category='error_news')
-        status_code = 500
-    except Exception as Error:
-        flash('Проверьте правильность введеных значений', category='error_news')
-        status_code = 400
-    finally:
-        return status_code
-    
-      
+  
 
 @news_router.route('/edit_news/<int:news_num>', methods=['POST', 'GET'])
 @login_required
@@ -96,8 +58,6 @@ def edit_new_by_num(news_num: int):
             return redirect('/news')
         
   
-
-
 
 @news_router.route('/page/<int:page_num>')
 def pages_scrolling(page_num: int):

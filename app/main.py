@@ -43,6 +43,7 @@ app.register_blueprint(converter_router, url_prefix="/convert")
 app.register_blueprint(news_router, url_prefix='/news')
 app.register_blueprint(notes_router, url_prefix='/notes')
 
+
 if __name__ == "__main__":
     from database import db
     db.init_app(app)

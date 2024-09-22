@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect
 from flask_login import login_required, current_user
 from .notes_orm import NotesOrm
+from .utils import add_new_notes_function, check_author, update_note_function, delete_note_function
 
 notes_router = Blueprint('notes_router', __name__, static_folder='static', template_folder='templates/notes')
 
@@ -18,19 +19,6 @@ def pages_notes():
 
 
 
-def add_new_notes_function(note_orm: NotesOrm):
-    status_code = 200
-    try:
-        name_notes = request.form['name_notes']
-        text_notes = request.form['text_notes']
-        author_id: int = current_user.get_id()
-        note_orm.add_new_notes(name_notes=name_notes, text_notes=text_notes, author_id=author_id)
-    except Exception as Error:
-        status_code = 500
-    finally:
-        return status_code
-
-
 @notes_router.route('/add_note', methods = ['POST', 'GET'])
 @login_required
 def add_note_page():
@@ -45,44 +33,24 @@ def add_note_page():
                 category='error_notes')
     return render_template('notes_add.html', title='Добавление заметки')
 
+
+
+
 @notes_router.route('/delete_note/<int:id_note>')
 @login_required
 def delete_note_page(id_note: int):
     note_orm = NotesOrm()
-    user_id: int = current_user.get_id()
-    status_author: bool = note_orm.check_note_and_author(id_note, user_id)
+    status_author = check_author(note_orm=note_orm ,id_note=id_note)
     if status_author:
-        note_orm.delete_note_from_db(id_note)
-        flash('Заметка была успешно удалена', category="success_notes")
-    else:
-        flash('Вы не являетесь автором этой заметки', category='error_notes')
+        delete_note_function(note_orm, id_note)
     return redirect('/notes/')
-
-def update_note_function(note_orm: NotesOrm, id_note: int):
-    status = 200
-    try:
-        new_name = request.form['name_notes']
-        new_text = request.form['text_notes']
-        note_orm.update_info_note(new_name=new_name, new_text=new_text, id_note=id_note)
-        flash('Изменения были применены', category='success_notes')
-    except (KeyError, ValueError, TypeError) as Error:
-        flash('Ошибка заполнения формы обновления заметки', category='error_notes')
-        status = 400
-    except Exception as Error:
-        flash('Ошибка обновления заметки', category='error_notes')
-        status = 500
-    finally:
-        return status
-        
-
 
 
 @notes_router.route('/update_note/<int:id_note>', methods=['POST', 'GET'])
 @login_required
 def update_note_page(id_note: int):
     note_orm = NotesOrm()
-    user_id: int = current_user.get_id()
-    status_author: bool = note_orm.check_note_and_author(id_note, user_id)
+    status_author = check_author(note_orm=note_orm, id_note=id_note)
     if status_author:
         if request.method == 'POST':
             status_update = update_note_function(note_orm, id_note)
@@ -90,22 +58,19 @@ def update_note_page(id_note: int):
                 return redirect('/notes/')
             else:
                 return redirect(f'/notes/update_note/{id_note}')
-
-        note_info = note_orm.get_note_info_by_id(id_note)
-        return render_template('edit_note.html', title='Обновление заметки', note_data=note_info)
+        else:
+            note_info = note_orm.get_note_info_by_id(id_note)
+            return render_template('edit_note.html', title='Обновление заметки', note_data=note_info)
     else:
-        flash('Вы не являетесь автором этой заметки', category='error_notes')
         return redirect('/notes/')
 
 @notes_router.route('/view_note/<int:id_note>')
 @login_required
 def page_one_note(id_note: int):
     note_orm = NotesOrm()
-    user_id: int = current_user.get_id()
-    status_author: bool = note_orm.check_note_and_author(id_note, user_id)
+    status_author = check_author(note_orm=note_orm, id_note=id_note)
     if status_author:
         note_info = note_orm.get_note_info_by_id(id_note)
         return render_template('one_note_page.html', title='Заметка', note_data= note_info)
     else:
-        flash('Вы не являетесь автором этой заметки', category='error_notes')
         return redirect('/notes/')
