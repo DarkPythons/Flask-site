@@ -6,7 +6,14 @@ from sqlalchemy import select, update
 from werkzeug.security import generate_password_hash, check_password_hash
 
 class AuthOrm:
-    """Содержит в себе основные функции для взаимодействия с таблицей пользователей"""
+    """
+    Содержит в себе основные функции для взаимодействия с таблицей пользователей
+    register_user: регистрация пользователя
+    get_user_by_email получить пользователя по его email
+    validate_password_user: проверка пароля, который ввел пользователь
+    get_rollback: сделать откат транзакции
+    update_data_user: обновление данных о пользователе
+    """
     def __init__(self):
         """Инициализация переменных и объектов для взаимодействия с базой данных"""
         from database import Users, db
