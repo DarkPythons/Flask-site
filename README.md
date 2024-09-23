@@ -39,7 +39,7 @@
 </ol>
 
 <h3>После открытия сайта по url http://127.0.0.1:5000/ вы должны увидеть следующее:</h3>
-<img src="https://i.ibb.co/nLMrnXQ/index.png" alt="index page" border="0" width="300" height="500">
+<img src="" alt="index page" border="0" width="300" height="500">
 
 
 ## Distribute
@@ -52,8 +52,9 @@
 The Flask-site project is distributed under the MIT license.
 
 ## Примеры страниц на запущенном сайте
+
 <p>
-      <img src="https://i.ibb.co/1Zj7WLV/notes.png" border="0" width="300" height="450">
-      <img src="https://i.ibb.co/jgDKzPJ/weather.jpg" alt="weather" border="0" width="300" height="450">
-      <img src="https://i.ibb.co/sF5CR0Z/notes.jpg" alt="notes" border="0" width="280" height="450">
+      <img src="" border="0" width="300" height="450">
+      <img src="" alt="weather" border="0" width="300" height="450">
+      <img src="" alt="notes" border="0">
 </p>
