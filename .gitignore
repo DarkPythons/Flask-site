@@ -9,3 +9,5 @@ __pycache__
 .pytest_cache
 /venv1
 venv1
+loggs_app
+*.log
