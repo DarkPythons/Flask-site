@@ -10,6 +10,7 @@ from flask import flash, redirect, request
 from flask_login import current_user
 
 from .news_orm import NewsOrm, ImageOrm
+from base_log import log_except
 
 def get_authencticate_user():
     user_id = current_user.get_id()
@@ -46,6 +47,7 @@ def update_data_news_function(new_orm: NewsOrm, news_num: int):
             image_orm.update_photo_by_news_id(new_img=img, number_news=news_num)
         flash('Изменение новости прошло успешно', category='success_news') 
     except (KeyError, ValueError, TypeError) as Error:
+        log_except.critical(f'Невозможно получить новую информацию новости из формы: {Error}')
         flash('Ошибка при изменении новости, повторите позже', category='error_news')
         status_code = 500
     except Exception as Error:

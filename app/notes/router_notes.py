@@ -14,6 +14,7 @@ from flask_login import login_required, current_user
 
 from .notes_orm import NotesOrm
 from .utils import add_new_notes_function, check_author, update_note_function, delete_note_function
+from base_log import log_app, log_except
 
 notes_router = Blueprint('notes_router', __name__,
     static_folder='static', template_folder='templates/notes')
@@ -42,6 +43,7 @@ def pages_notes_pagination(page_id: int):
     user_id = current_user.get_id()
     if user_id:
         notes_list_data: list = note_orm.get_notes_by_page(author_id=user_id, page_id=page_id)
+        log_app.info(f'Пользователь {user_id} запросил страницу с заметками {page_id}')
         return render_template(
             'notes_page.html', title=f'Заметки, страница {page_id}', 
             notes_data_list=notes_list_data, page_id=page_id
@@ -114,5 +116,6 @@ def delete_note_page(id_note: int):
     note_orm = NotesOrm()
     status_author = check_author(note_orm=note_orm ,id_note=id_note)
     if status_author:
+        log_app.info('Заметка с id {id_note} была удалена')
         delete_note_function(note_orm, id_note)
     return redirect('/notes/')

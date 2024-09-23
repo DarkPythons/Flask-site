@@ -8,11 +8,12 @@ from flask_login import LoginManager
 
 from config import BaseSettingsApp, BaseSettingsDataBase
 from router_main import main_router
-from auth.router_auth import auth_router
 from error_handlers import error_router
+from auth.router_auth import auth_router
 from converter.router_converter import converter_router
 from news.router_news import news_router
 from notes.router_notes import notes_router
+from base_log import log_app, log_except
 
 db_setting = BaseSettingsDataBase()
 
@@ -56,7 +57,11 @@ if __name__ == "__main__":
     db.init_app(app)
     with app.app_context():
         db.create_all()
+    log_app.info('Все таблицы в базе успешно созданы')
+    log_app.info('Запуск приложения') 
     app.run(debug=app_settings.PROJECT_ON_DEBUG)
     with app.app_context():
         db.drop_all()
+        log_app.info('Приложение выключено')
+        log_app.info('Все таблицы в базе удалены')
     

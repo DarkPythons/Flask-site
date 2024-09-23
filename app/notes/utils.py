@@ -10,6 +10,7 @@ from flask import request, flash
 from flask_login import current_user
 
 from .notes_orm import NotesOrm
+from base_log import log_app, log_except
 
 def add_new_notes_function(note_orm: NotesOrm):
     """
@@ -23,6 +24,7 @@ def add_new_notes_function(note_orm: NotesOrm):
         author_id: int = current_user.get_id()
         note_orm.add_new_notes(name_notes=name_notes, text_notes=text_notes, author_id=author_id)
     except Exception as Error:
+        log_except.error(f'Не удалось добавить заметку пользователя {author_id}, ошибка: {Error}')
         status_code = 500
     finally:
         return status_code
@@ -40,15 +42,18 @@ def update_note_function(note_orm: NotesOrm, id_note: int):
         note_orm.update_info_note(new_name=new_name, new_text=new_text, id_note=id_note)
         flash('Изменения были применены', category='success_notes')
     except (KeyError, ValueError, TypeError) as Error:
+        log_except.error(f'Ошибка получения данных из формы для обновления замекти: {Error}')
         flash('Ошибка заполнения формы обновления заметки', category='error_notes')
         status = 400
     except Exception as Error:
-        flash('Ошибка обновления заметки, проверьте заполненные поля на ошибки', category='error_notes')
+        log_except.error(f"Ошибка при изменении данных заметки {id_note}, {Error}")
+        flash('Ошибка обновления заметки, проверьте заполненные поля на ошибки', 
+        category='error_notes')
         status = 500
     finally:
         return status
 
-def check_author(note_orm: NotesOrm ,id_note: int):
+def check_author(note_orm: NotesOrm, id_note: int):
     """
     Функция для проверки является ли пользователь автором конкретной заметки
     note_orm: объект, который позволяет общаться с таблицей заметок
@@ -72,4 +77,5 @@ def delete_note_function(note_orm: NotesOrm, id_note: int):
         note_orm.delete_note_from_db(id_note)
         flash('Заметка была успешно удалена', category="success_notes")    
     except Exception as Error: 
+        log_except.error(f'Ошибка при удании замекти {id_note}, {Error}')
         flash('Ошибка при удалении заметки')

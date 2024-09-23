@@ -8,6 +8,7 @@ from flask import request, flash
 import requests
 
 from config import SettingByAPICurrency
+from base_log import log_except, log_app
 
 setting_currency = SettingByAPICurrency()
 
@@ -31,7 +32,6 @@ def get_json_response_from_currency_api(*,
     response = requests.get(url, headers=setting_currency.HEADERS_BY_REQ)
     response_json = response.json()
     return response_json
-
 
 def confirm_data_by_response(*, response_json, form_to_currency_code) -> dict:
     """
@@ -83,16 +83,21 @@ def creating_response_currency() -> dict:
         full_data_dict = confirm_data_by_response(
             response_json=response_json,
             form_to_currency_code=form_to_currency_code
-            )        
+            )   
     except KeyError as Error:
         flash('Введены не все данные для выполнения запрооса.', category='error')
+        log_except.error(f'Введены не все данные для выполнения запроса ковертирования: {Error}')
     except requests.JSONDecodeError as Error:
         flash('Ошибка сервера, обратитесь к этой функции чуть позже.', category='error')
+        log_except.critical(f'Серсер не смог преобразовать ответ в json: {Error}')
     except (TypeError, ValueError) as Error:
         flash('Возникла ошибка при конвертации полученных данных от сервера.', category='error')
+        log_except.critical(f'API конвертировщика выдало неправильные данные: {Error}')
     except Exception as Error:
         flash('Ошибка сервера', category='error')
+        log_except.critical(f"Неопознаная ошибка при конвертировании: {Error}")
     else:
+        log_app.info('Данные из API конвертировщика успешно получены')
         return {'status_code' : status_code, 'full_data_dict' : full_data_dict}
     status_code = 500
     return {'status_code' : status_code}

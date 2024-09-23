@@ -3,6 +3,7 @@
 UserLogin: содержит все нужные функции для работы с пользователем 
 """
 from flask import redirect, url_for
+from base_log import log_except
 
 class UserLogin():
     """Класс для работы с сессиями пользователей"""
@@ -42,7 +43,8 @@ class UserLogin():
         """
         try:
             return str(self.__user['id'])
-        except TypeError:
+        except (TypeError, Exception) as Error:
+            log_except.error(f'Не удалось получить id пользователя: {Error}')
             return redirect(url_for('router_auth.logout'))
     #__user - хранит полученные данные из базы
     def get_name(self):

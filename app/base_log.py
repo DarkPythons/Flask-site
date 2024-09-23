@@ -33,6 +33,6 @@ class BaseLoggings():
         logger.critical(message)
 
 # Объект для общих логов
-log_app = BaseLoggings(file='logging/loggs_app/logging.log', rotation='100 MB', level='DEBUG')
+log_app = BaseLoggings(file='loggs_app/logging.log', rotation='100 MB', level='DEBUG')
 # Объект для логов уровен которых выше ERROR (ошибка)
-log_except = BaseLoggings(file='logging/loggs_app/except.log', rotation='100 MB', level='ERROR')
+log_except = BaseLoggings(file='loggs_app/except.log', rotation='100 MB', level='ERROR')

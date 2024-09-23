@@ -13,6 +13,7 @@ from .auth_orm import AuthOrm
 from .utils import (data_validate, creating_dict_for_profile, function_by_login, 
     function_by_register, edit_profile_funtion
     )
+from base_log import log_except
 
 auth_router = Blueprint('router_auth', 
     __name__, 
@@ -83,7 +84,8 @@ def profile():
     user_info = orm.get_user_by_email(user_email)
     try:
         date: dict = creating_dict_for_profile(user_info)
-    except TypeError as Error:
+    except (TypeError, KeyError) as Error:
+        log_except.error(f'Ошибка получения данных из словаря: {Error}')
         return redirect(url_for('.logout'))
     return render_template('auth/profile.html', title='Профиль', date=date)
 
@@ -103,4 +105,5 @@ def edit_profile():
             return redirect(url_for('.profile'))
         else:
             pass
-    return render_template('auth/edit_profile.html', title='Редактирование профиля', user_data=user_info)
+    return render_template('auth/edit_profile.html', title='Редактирование профиля',
+    user_data=user_info)

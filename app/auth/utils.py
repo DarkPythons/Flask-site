@@ -8,6 +8,7 @@ from flask_login import login_user
 
 from .UserLogin import UserLogin
 from .auth_orm import AuthOrm
+from base_log import log_app, log_except
 
 def data_validate(form_data):
     """
@@ -60,6 +61,7 @@ def function_by_login():
     if user_from_orm:
         password_valid = orm.validate_password_user(user_from_orm['psw'], request.form['psw'])
         if password_valid:
+            log_app.info(f'Пользовать с id {user_from_orm['id']} вошел в аккаунт.')
             result = create_user_session(user=user_from_orm)
             return result
         else:
@@ -80,12 +82,14 @@ def function_by_register():
             #Получение пользователя из базы по его email и создание 
             user_from_orm = orm.get_user_by_email(request.form['email'])
             result = create_user_session(user=user_from_orm)
+            log_app.info(f'Пользователь с id {user_from_orm['id']} из базы зарегистрировался')
             return result
         else:
             flash('Пользователь с таким email уже есть.', category='error')
-    except Exception as error:
+    except Exception as Error:
         #Откат базы данных в случае ошибки
         orm.get_rollback()
+        log_except.error(f'Ошибка при регистрации пользователя: {Error}')
         flash('Ошибка на стороне базы данных', category='error')
 
 
@@ -102,6 +106,7 @@ def edit_profile_funtion(orm: AuthOrm, user_info: dict):
         orm.update_data_user(new_username=new_username, new_about=new_about, user_id=user_info['id'])
         flash('Изменение данных аккаунта прошло успешно', category='success')   
     except Exception as Error:
+        log_except.error(f'Ошибка при изменении данных профиля: {Error}')
         flash('Ошибка при изменении данных аккаунта, проверьте данные', category='error')
         status_code = 400
     finally:
