@@ -5,7 +5,6 @@ update_note_function: функция для обновления данных з
 check_author: функция для проверки, является ли пользователь автором конкретной заметки 
     (определение может ли пользователь взаимодействовать с ней)
 delete_note_function: функция для удаления конкретной заметки
-
 """
 from flask import request, flash
 from flask_login import current_user

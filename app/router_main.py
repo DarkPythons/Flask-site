@@ -1,5 +1,9 @@
-from flask import render_template, Blueprint, send_from_directory
-import os
+"""
+Модуль, в котором лежат основные страницы сайта по базову url
+index: главная страницa сайта
+about: страница 'о нас'
+"""
+from flask import render_template, Blueprint
 
 main_router = Blueprint("main_router", __name__, 
     static_folder='static', 
@@ -7,13 +11,10 @@ main_router = Blueprint("main_router", __name__,
 
 @main_router.route('/')
 def index():
+    """Обработчик запроса на главную страницу"""
     return render_template('index.html', title='Главная страница')
 
 @main_router.route('/about')
 def about():
+    """Обработчик запроса страницы 'о нас'."""
     return render_template('about.html', title='О нас')
-
-
-@main_router.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join('app', 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')

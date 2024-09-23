@@ -1,3 +1,8 @@
+"""
+Основной модуль для работы приложения,
+здесь происходит регистрация url-ов из других модулей, 
+запуск приложения и настройки входа в аккаунт.
+"""
 from flask import Flask
 from flask_login import LoginManager
 
@@ -13,26 +18,24 @@ db_setting = BaseSettingsDataBase()
 
 app_settings = BaseSettingsApp()
 
-
 app = Flask(__name__)
-
-
 
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = app_settings.SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = db_setting.get_db_url()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-
 login_manager = LoginManager(app)
 login_manager.view = 'login'
 login_manager.login_message = "Авторизуйтесь для доступа к закрытым страницам"
 login_manager.login_message_category = 'success'
 
-
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id: int):
+    """
+    Функция для подгрузки информации из базы о пользователе
+    user_id: id пользователя, данные которого нужно подгрузить
+    """
     from auth.UserLogin import UserLogin
     return UserLogin().fromDB(user_id)
 
@@ -43,8 +46,12 @@ app.register_blueprint(converter_router, url_prefix="/convert")
 app.register_blueprint(news_router, url_prefix='/news')
 app.register_blueprint(notes_router, url_prefix='/notes')
 
-
 if __name__ == "__main__":
+    """
+    Происходит создание всех таблиц перед началом работы приложения,
+    после чего происходит запуск приложения, после выключения приложения происходит
+    удаление всех таблиц из базы
+    """
     from database import db
     db.init_app(app)
     with app.app_context():

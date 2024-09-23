@@ -1,4 +1,12 @@
-"""Модуль для обработки распространенных ошибок"""
+"""
+Модуль для обработки распространенных ошибок
+handler401: обработчик 401 ошибки
+handler403: обработчик 403 ошибки
+handler404: обработчик 404 ошибки
+handler405: обработчик 405 ошибки
+handler500: обработчик 500 ошибки
+handler503: обработчик 501 ошибки
+"""
 from flask import Blueprint, render_template
 
 error_router = Blueprint('error_handlers', 

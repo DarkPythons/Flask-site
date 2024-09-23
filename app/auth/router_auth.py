@@ -20,7 +20,6 @@ auth_router = Blueprint('router_auth',
     template_folder='templates'
     )
 
-
 @auth_router.route('/login', methods=['POST', 'GET'])
 def login():
     """
@@ -36,8 +35,6 @@ def login():
         if result == 200:
             return redirect(url_for('.profile'))
     return render_template('auth/login.html', title='Вход')
-
-
 
 @auth_router.route('/register', methods=['POST', 'GET'])
 def register():
@@ -59,7 +56,6 @@ def register():
             flash('Пароли не совпадают.', category='error')
     return render_template('auth/register.html', title='Регистрация')
 
-
 @auth_router.route('/logout', methods=['GET'])
 @login_required
 def logout():
@@ -74,8 +70,6 @@ def logout():
         del session['was_once_logged_in']
     flash("Вы вышли из аккаунта", category='success')
     return redirect(url_for('.login'))
-
-
 
 @auth_router.route('/profile', methods=['GET'])
 @login_required
