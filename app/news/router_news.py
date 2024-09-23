@@ -111,7 +111,7 @@ def add_news_page():
             image_orm = ImageOrm()
             news_id_in_db = add_news_function(new_orm)
             add_photo_function(image_orm, news_id_in_db)
-            flash('Добавление статьи прошло успешно', category='success_news')
+            flash('Добавление новости прошло успешно', category='success_news')
             log_app.info(f'Новость была добавлена, её id {news_id_in_db}')
             return redirect(url_for('.news_page'))
         except Exception as Error:

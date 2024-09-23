@@ -13,7 +13,7 @@
               <div class='flash {{ cat }}'>{{ msg }}</div>
               {% endfor %}
             <label for="NameNotes" class="form-label">Новое название заметки</label>
-            <input type="text" class="form-control" id="NameNotes"  name="name_notes" required value={{ note_data.name_notes }}>
+            <input type="text" class="form-control" id="NameNotes"  name="name_notes" required value="{{ note_data.name_notes }}">
             <div class="invalid-feedback" bis_skin_checked="1">
               Введите корректный заголовок.
             </div>
