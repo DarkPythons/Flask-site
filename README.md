@@ -54,7 +54,7 @@ The Flask-site project is distributed under the MIT license.
 ## Примеры страниц на запущенном сайте
 
 <p>
-      <img src="" border="0" width="300" height="450">
+      <img src="https://i.ibb.co/9ypX1yn/index.jpg" border="0" width="300" height="450">
       <img src="" alt="weather" border="0" width="300" height="450">
       <img src="" alt="notes" border="0">
 </p>
