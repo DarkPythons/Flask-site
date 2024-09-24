@@ -8,12 +8,12 @@
   <img alt="PyPI - Python Version" src="https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json">
 </p>
 
-## About
+## О проекте
 
 Этот сайт написан на Flask, при помощи Bootstrap у сайта есть красивый фронтенд, а при помощи Flask сильный бекенд. 
 На сайте есть множество функций: конвертация валюты, написание/чтение/изменение новостей, заметок, свой профиль.
 
-## Documentation
+## Документация
 
 <h3>Базовая настройка</h3>
 <ol>
