@@ -39,7 +39,7 @@
 </ol>
 
 <h3>После открытия сайта по url http://127.0.0.1:5000/ вы должны увидеть следующее:</h3>
-<img src="https://i.ibb.co/9ypX1yn/index.jpg" alt="index page" border="0" width="300" height="500">
+<img src="https://s2.radikal.cloud/2024/09/24/index.png" alt="index page" border="0" width="80%" height="70%">
 
 
 ## Distribute
@@ -52,9 +52,13 @@
 The Flask-site project is distributed under the MIT license.
 
 ## Примеры страниц на запущенном сайте
-
-<p>
-      <img src="https://i.ibb.co/9ypX1yn/index.jpg" border="0" width="300" height="450">
-      <img src="https://i.ibb.co/9ypX1yn/index.png" alt="weather" border="0" width="300" height="450">
-      <img src="https://i.ibb.co/9ypX1yn/index.jpg" alt="notes" border="0">
-</p>
+<h3>Конвертировщик валюты</h3>
+<img src="https://s2.radikal.cloud/2024/09/24/converter.png" alt="converter image" border="0" width="80%" height="70%">
+<h3>Профиль пользователя</h3>
+<img src="https://s2.radikal.cloud/2024/09/24/profile.png" alt="profile image" border="0" width="80%" height="70%">
+<h3>Страница с заметками</h3>
+<img src="https://s2.radikal.cloud/2024/09/24/notes.png" alt="notes image" border="0" width="80%" height="70%">
+<h3>Начало страницы с новостями</h3>
+<img src="https://s2.radikal.cloud/2024/09/24/news_1.png" alt="news_1" border="0" width="80%" height="70%">
+<h3>Продолжение страницы с новостями</h3>
+<img src="https://s2.radikal.cloud/2024/09/24/news_2.png" alt="news_2" border="0" width="80%" height="70%">
